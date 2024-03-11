@@ -1,19 +1,8 @@
 import React from 'react';
-import axios from 'axios';
-import fileDownload from 'js-file-download';
 
 const HeroSection = () => {
-  // Function to handle resume download
   const handleDownloadResume = () => {
-    axios.get('/assets/resume.pdf', {
-      responseType: 'blob',
-    })
-    .then((res) => {
-      fileDownload(res.data, 'Mishab_Resume.pdf');
-    })
-    .catch((error) => {
-      console.error('Error downloading resume:', error);
-    });
+    window.open('/assets/resume.pdf', '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -22,9 +11,9 @@ const HeroSection = () => {
         <h1 className="text-6xl font-bold mb-4">Mishab</h1>
         <p className="text-8xl mb-8 font-bold">Full Stack Developer</p>
         {/* Use handleDownloadResume function for onClick event */}
-        <button onClick={handleDownloadResume} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg">
+        <a href="/assets/resume.pdf" download="Mishab_Resume.pdf" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg">
           Download Resume
-        </button>
+        </a>
       </div>
     </section>
   );
