@@ -2,8 +2,9 @@ import React from 'react';
 
 const HeroSection = () => {
   const onButtonClick = () => {
-    fetch('/src/assets/resume.pdf')
- // Fetch the PDF file
+    const resumeUrl = 'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/resume.pdf';
+
+    fetch(resumeUrl) // Fetch the PDF file
       .then((response) => {
         return response.blob(); // Convert response to a blob
       })
