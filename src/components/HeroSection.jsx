@@ -2,7 +2,7 @@ import React from 'react';
 
 const HeroSection = () => {
   const onButtonClick = () => {
-    fetch('/portfolio/assets/resume.pdf')  // Fetch the PDF file
+    fetch('/src/assets/resume.pdf') // Fetch the PDF file
       .then((response) => {
         return response.blob(); // Convert response to a blob
       })
