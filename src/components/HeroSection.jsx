@@ -2,28 +2,19 @@ import React from 'react';
 
 const HeroSection = () => {
   const onButtonClick = () => {
-<<<<<<< HEAD
     const baseUrl = process.env.NODE_ENV === 'production' ? '/portfolio' : '';
     const resumeUrl = `${baseUrl}/src/assets/resume.pdf`;
-=======
-    const resumeUrl = 'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/resume.pdf';
->>>>>>> 03e045770a4222675450063050ff5d8e9084dc86
-
-    fetch(resumeUrl) // Fetch the PDF file
+    fetch(resumeUrl)
       .then((response) => {
-        return response.blob(); // Convert response to a blob
+        return response.blob();
       })
       .then((blob) => {
-        // Create a URL for the blob
         const url = window.URL.createObjectURL(new Blob([blob]));
-        // Create a temporary link element
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'Mishab_Resume.pdf'); // Set the download attribute
-        // Append the link to the body and trigger the click event
+        link.setAttribute('download', 'Mishab_Resume.pdf');
         document.body.appendChild(link);
         link.click();
-        // Clean up by removing the link and revoking the URL
         link.parentNode.removeChild(link);
         window.URL.revokeObjectURL(url);
       })
@@ -37,7 +28,6 @@ const HeroSection = () => {
       <div className="container mx-auto text-left animate-slide-in-opacity">
         <h1 className="text-5xl font-bold mb-4">Mishab</h1>
         <p className="text-7xl mb-8 font-bold">Full Stack Developer</p>
-        {/* Render a button to trigger the download */}
         <button onClick={onButtonClick} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg">
           Download Resume
         </button>
