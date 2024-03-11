@@ -2,8 +2,12 @@ import React from 'react';
 
 const HeroSection = () => {
   const onButtonClick = () => {
+<<<<<<< HEAD
     const baseUrl = process.env.NODE_ENV === 'production' ? '/portfolio' : '';
     const resumeUrl = `${baseUrl}/src/assets/resume.pdf`;
+=======
+    const resumeUrl = 'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/resume.pdf';
+>>>>>>> 03e045770a4222675450063050ff5d8e9084dc86
 
     fetch(resumeUrl) // Fetch the PDF file
       .then((response) => {
