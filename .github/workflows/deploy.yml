@@ -49,3 +49,9 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+              
+- name: Release GitHub Actions
+
+
+              
+  uses: technote-space/release-github-actions@v8.0.3
