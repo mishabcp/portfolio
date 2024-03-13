@@ -2,9 +2,7 @@ import React from 'react';
 
 const HeroSection = () => {
   const onButtonClick = () => {
-    const resumeUrl = 'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/resume.pdf';
-
-    fetch(resumeUrl) // Fetch the PDF file
+    fetch('/portfolio/src/assets/resume.pdf')
       .then((response) => {
         return response.blob(); // Convert response to a blob
       })
@@ -28,16 +26,20 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="bg-gray-900 text-white py-40 mt-0 h-screen flex flex-col justify-center items-center text-center overflow-hidden relative">
-      <div className="container mx-auto text-left animate-slide-in-opacity">
-        <h1 className="text-5xl font-bold mb-4">Mishab</h1>
-        <p className="text-7xl mb-8 font-bold">Full Stack Developer</p>
-        {/* Render a button to trigger the download */}
-        <button onClick={onButtonClick} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full shadow-lg">
-          Download Resume
-        </button>
-      </div>
-    </section>
+    <section className="bg-gray-900 text-white py-10 md:py-24 h-screen flex flex-col justify-center items-center text-center overflow-hidden relative">
+    <div className="container mx-auto text-left sm:pl-4 md:pl-4 lg:pl-0 animate-slide-in-opacity" style={{ paddingLeft: '40px' }}>
+      {/* Add left padding for small (sm) screen sizes */}
+      <h1 className="text-5xl  md:text-7xl lg:text9xl font-bold mb-4 md:mb-8">Mishab</h1>
+      {/* Adjust font sizes for better readability */}
+      <p className="text-3xl  md:text-5xl lg:text-7xl mb-4 md:mb-8 font-bold">Full Stack Developer</p>
+      {/* Adjust font sizes and padding for the button */}
+      <button onClick={onButtonClick} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 md:py-3 md:px-8 lg:px-10  mb-0 mt-8 rounded-full shadow-lg">
+        Resume
+      </button>
+    </div>
+  </section>
+  
+
   );
 };
 
