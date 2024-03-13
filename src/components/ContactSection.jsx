@@ -1,39 +1,71 @@
-// ContactSection.jsx
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import { FaGithub, FaPhone, FaEnvelope } from 'react-icons/fa';
 
 const ContactSection = () => {
+  const contactRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const contactSection = contactRef.current;
+
+    const handleScroll = () => {
+      const top = contactSection.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+
+      if (top < windowHeight * 0.75) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    form.reset(); // Reset the form fields
+  };
+
   return (
-    <section id="contact-section" className="py-20 bg-gray-200 mt-20">
-      <div className="container mx-auto"> {/* Added container mx-auto */}
-        <h2 className="text-3xl font-bold mb-6">Contact Me</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Get in Touch</h3>
-            <p className="text-gray-600 mb-4">Feel free to contact me if you have any questions or collaboration opportunities.</p>
-            <ul>
-              <li className="flex items-center mb-2">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 1a9 9 0 0 0-9 9c0 4.97 4.03 9 9 9s9-4.03 9-9a9 9 0 0 0-9-9zm0 15a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm-.18-7.28a1 1 0 1 0-1.64 1.14l1.57 2.09a.5.5 0 0 0 .85-.5l-1.57-2.08z"/>
-                </svg>
-                example@example.com
-              </li>
-              <li className="flex items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-blue-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M10 1a9 9 0 0 0-9 9c0 4.97 4.03 9 9 9s9-4.03 9-9a9 9 0 0 0-9-9zm0 15a6 6 0 1 1 0-12 6 6 0 0 1 0 12zm-.18-7.28a1 1 0 1 0-1.64 1.14l1.57 2.09a.5.5 0 0 0 .85-.5l-1.57-2.08z"/>
-                </svg>
-                +1 123 456 7890
-              </li>
-            </ul>
+    <section
+      id='Contact-Section'
+      ref={contactRef}
+      className={`container mx-auto py-12 lg:py-20 bg-white mt-20 mb-20 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-in-out`}
+    >
+      <h2 className="text-center text-4xl md:text-6xl font-bold mb-10 md:mb-16">Contact</h2>
+      <div className="flex flex-col md:flex-row justify-between w-11/12 mx-auto">
+        {/* First Div */}
+        <div className="flex flex-col items-center justify-center mb-16 md:mb-24 md:w-1/2">
+          <h3 className="text-lg md:text-2xl font-semibold mb-6">Get in Touch</h3>
+          <div className="flex flex-col items-center">
+            <div className="flex items-center mb-3">
+              <FaGithub className="w-5 h-5 text-blue-500 mr-2" />
+              <a href="https://github.com/mishabcp" target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">mishabcp</a>
+            </div>
+            <div className="flex items-center mb-3">
+              <FaPhone className="w-5 h-5 text-blue-500 mr-2" />
+              <a href="tel:+918848659419" className="text-blue-500 hover:underline">+91 88486 59419</a>
+            </div>
+            <div className="flex items-center">
+              <FaEnvelope className="w-5 h-5 text-blue-500 mr-2" />
+              <a href="mailto:mishabcp01@gmail.com" className="text-blue-500 hover:underline">mishabcp01@gmail.com</a>
+            </div>
           </div>
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Contact Form</h3>
-            {/* Add your contact form component here */}
-            <p className="text-gray-600">Alternatively, you can fill out the contact form below:</p>
-            <form>
-              {/* Form fields go here */}
-              <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full mt-4">Send Message</button>
-            </form>
-          </div>
+        </div>
+        {/* Second Div */}
+        <div className="flex flex-col items-center md:items-start w-full md:w-1/2">
+          <form onSubmit={handleSubmit} className="flex flex-col items-center w-full">
+            <input type="text" name="name" placeholder="Name" className="input-field rounded-lg px-4 py-2 mb-4 border border-gray-300 focus:border-blue-500" />
+            <input type="email" name="email" placeholder="Email" className="input-field rounded-lg px-4 py-2 mb-4 border border-gray-300 focus:border-blue-500" />
+            <textarea name="message" placeholder="Message" rows="4" className="input-field rounded-lg px-4 py-2 mb-4 border border-gray-300 focus:border-blue-500"></textarea>
+            <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full mt-4 disabled:opacity-50 disabled:pointer-events-none">Send Message</button>
+          </form>
         </div>
       </div>
     </section>

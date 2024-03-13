@@ -1,29 +1,22 @@
-// Footer.jsx
 import React from 'react';
+import { scrollToSection } from './Header'; // Importing the scrollToSection function from the Header component
+import '/src/index.css';
 
 const Footer = () => {
-  const scrollToSection = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    section.scrollIntoView({ behavior: 'smooth' });
+  const handleClick = (sectionId, event) => {
+    event.preventDefault(); // Prevent default action of anchor tag
+    scrollToSection(sectionId);
   };
 
   return (
-    <footer className="bg-gray-800 text-white py-6">
-      <div className="container mx-auto text-center">
-        <p>&copy; 2024 Your Portfolio. All rights reserved.</p>
-        <div className="mt-4">
-          <a href="#" className="text-blue-500 hover:underline mx-2">Home</a>
-          <a href="#" className="text-blue-500 hover:underline mx-2">About</a>
-          <a href="#" className="text-blue-500 hover:underline mx-2">Skills</a>
-          <a href="#" className="text-blue-500 hover:underline mx-2" onClick={() => scrollToSection('portfolio-section')}>Projects</a>
-          <a href="#" className="text-blue-500 hover:underline mx-2">Contact</a>
-        </div>
-        <div className="mt-4">
-          {/* Add social media icons here */}
-          <a href="#" className="text-blue-500 hover:text-blue-600 mx-2"><i className="fab fa-twitter"></i></a>
-          <a href="#" className="text-blue-500 hover:text-blue-600 mx-2"><i className="fab fa-facebook"></i></a>
-          <a href="#" className="text-blue-500 hover:text-blue-600 mx-2"><i className="fab fa-instagram"></i></a>
-          <a href="#" className="text-blue-500 hover:text-blue-600 mx-2"><i className="fab fa-linkedin"></i></a>
+    <footer className="bg-gray-800 text-white relative rounded-t-3xl"> {/* Apply rounded-t-lg class here */}
+      <div className="container mx-auto text-center relative z-10 py-4">
+        <p className='mt-10'>&copy; 2024 Your Portfolio. All rights reserved.</p>
+        <div className="mb-8 mt-6">
+          <a href="#about-section" className="text-blue-500 hover:underline mx-2" onClick={(e) => handleClick('about-section', e)}>About</a>
+          <a href="#skills-section" className="text-blue-500 hover:underline mx-2" onClick={(e) => handleClick('skills-section', e)}>Skills</a>
+          <a href="#Project-Section" className="text-blue-500 hover:underline mx-2" onClick={(e) => handleClick('Project-Section', e)}>Projects</a>
+          <a href="#Contact-Section" className="text-blue-500 hover:underline mx-2" onClick={(e) => handleClick('Contact-Section', e)}>Contact</a>
         </div>
       </div>
     </footer>
