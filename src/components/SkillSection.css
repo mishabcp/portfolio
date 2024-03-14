@@ -1,0 +1,11 @@
+/* SkillSection.css */
+
+/* Card styles */
+.skills-section-container .skill-card {
+    border-radius: 1rem;
+  }
+  
+  .skills-section-container .skill-card {
+    box-shadow: 0 4px 6px -1px rgb(241, 241, 241), 0 2px 4px -1px rgba(255, 255, 255, 0.979);
+  }
+  

@@ -29,7 +29,7 @@ const AboutSection = () => {
     <section
       ref={aboutRef}
       id="about-section"
-      className={`py-8 lg:py-16 bg-white mt-16 md:mt-20 pl-8 md:pl-12 md:pr-12 pr-8 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-in-out`}
+      className={` py-8 lg:py-16  mt-16 md:mt-20 pl-8 md:pl-12 md:pr-12 pr-8 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-in-out`}
     >
       <div className="container mx-auto text-center px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl md:text-6xl font-bold mb-8 md:mb-12">About Me</h2>

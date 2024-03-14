@@ -35,7 +35,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gray-800 text-white py-4 md:py-6 px-8 md:px-8 fixed top-0 left-0 w-full z-10 shadow-xl rounded-b-xl">
+    <header className="text-white py-4 md:py-6 px-8 md:px-8 fixed top-0 left-0 w-full shadow-xl rounded-b-xl z-50" style={{ background: 'rgba(0, 0, 52, 2)' }}>
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className={`flex items-center ${isMenuOpen ? 'hidden' : 'block'}`}>
@@ -70,7 +70,7 @@ const Header = () => {
 
         {/* Navigation Links */}
         <nav className={`md:flex md:items-center md:w-auto ${isMenuOpen ? 'block' : 'hidden'}`} ref={dropdownRef}>
-          <ul className="flex flex-col md:flex-row gap-6 md:gap-10"> {/* Adjust gap-4 and md:gap-6 for increased space */}
+          <ul className="flex flex-col md:flex-row gap-6 md:gap-10">
             <li>
               <button onClick={() => scrollToSection('about-section')} className="hover:text-gray-300 text-base md:text-lg">
                 About
@@ -98,6 +98,5 @@ const Header = () => {
   );
 };
 
-export { scrollToSection }; // Exporting scrollToSection as a named export
-
+export { scrollToSection };
 export default Header;

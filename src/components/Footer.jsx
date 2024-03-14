@@ -9,7 +9,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-gray-800 text-white relative rounded-t-3xl"> {/* Apply rounded-t-lg class here */}
+    <footer className=" text-white relative rounded-t-3xl"> {/* Apply rounded-t-lg class here */}
       <div className="container mx-auto text-center relative z-10 py-4">
         <p className='mt-10'>&copy; 2024 Your Portfolio. All rights reserved.</p>
         <div className="mb-8 mt-6">

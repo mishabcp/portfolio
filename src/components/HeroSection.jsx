@@ -28,7 +28,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="bg-gray-900 text-white py-10 md:py-24 h-screen flex flex-col justify-center items-center text-center overflow-hidden relative">
+    <section className=" text-white py-10 md:py-24 h-screen flex flex-col justify-center items-center text-center overflow-hidden relative">
     <div className="container mx-auto text-left sm:pl-4 md:pl-4 lg:pl-0 animate-slide-in-opacity" style={{ paddingLeft: '40px' }}>
       {/* Add left padding for small (sm) screen sizes */}
       <h1 className="text-5xl  md:text-7xl lg:text9xl font-bold mb-4 md:mb-8">Mishab</h1>
