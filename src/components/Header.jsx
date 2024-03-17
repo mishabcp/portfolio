@@ -35,7 +35,7 @@ const Header = () => {
   };
 
   return (
-    <header className="text-white py-4 md:py-6 px-8 md:px-8 fixed top-0 left-0 w-full shadow-xl rounded-b-xl z-50" style={{ background: 'rgba(0, 0, 52, 2)' }}>
+    <header className="text-white py-4 md:py-6 px-8 md:px-8 fixed top-0 left-0 w-full shadow-xl rounded-b-xl z-50" style={{ background: 'rgb(0, 0, 22)' }}>
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className={`flex items-center ${isMenuOpen ? 'hidden' : 'block'}`}>

@@ -64,9 +64,9 @@ const ContactSection = () => {
         {/* Second Div */}
         <div className="flex flex-col items-center ml-0 md:ml-3 w-full md:w-2/3 border custom-shadow border-gray-300 rounded-lg p-10">
           <form onSubmit={handleSubmit} className="flex flex-col items-center w-full">
-            <input type="text" name="name" placeholder="Name" className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-white" />
-            <input type="email" name="email" placeholder="Email" className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-white" />
-            <textarea name="message" placeholder="Message" rows="4" className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-white"></textarea>
+            <input type="text" name="name" placeholder="Name" className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-black" />
+            <input type="email" name="email" placeholder="Email" className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-black" />
+            <textarea name="message" placeholder="Message" rows="4" className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-black"></textarea>
             <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white custom-shadow font-bold py-2 px-4 rounded-full mt-4 disabled:opacity-50 disabled:pointer-events-none">Send Message</button>
           </form>
         </div>

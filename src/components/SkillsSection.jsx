@@ -32,7 +32,7 @@ const SkillsSection = () => {
     <section
       ref={skillsRef}
       id="skills-section"
-      className={`skills-section-container px-8 md:px-12 mt-6 mb-24 md:mb-40 md:mt-20 ${isVisible ? 'visible' : 'hidden'}`}
+      className={`skills-section-container px-8 md:px-12 mt-6 mb-24 md:mb-40 md:mt-20 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-in-out `}
     >
       <div className="container mx-auto">
         <h2 className="skills-section-heading text-4xl md:text-6xl font-bold mb-8 md:mb-12 text-center">Skills</h2>
