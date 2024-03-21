@@ -10,7 +10,7 @@ import Footer from './components/Footer.jsx';
 
 const Home = () => {
   return (
-    <div>
+    <div className = "w-4/5">
       {/* Header Component */}
       <Header />
 
