@@ -28,36 +28,36 @@ const ProjectSection = () => {
   return (
     <div id='Project-Section'
       ref={projectRef}
-      className={`container mx-auto w-9/10 mt-8 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-in-out`}
+      className={`container w-4/5 lg:w-3/5 mx-auto mb-20 lg:mb-40 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-in-out`}
     >
       <h2 className="text-center text-4xl md:text-6xl font-bold mb-10 md:mb-16 text-white">Projects</h2>
 
-      <div className="grid items-center justify-center">
+      <div className="items-center justify-center">
         {/* First Two Divs */}
-        <div className="g-col-6 mb-8" style={{ display: 'flex' }}>
-          <div className="flex flex-col items-center justify-center mb-4 pr-10">
+        <div className=" mb-10" style={{ display: 'flex' }}>
+          <div className="flex flex-col w-full items-center justify-center">
             <h3 className="text-lg lg:text-xl font-semibold mb-2 text-white">Project Name</h3>
-            <p className="text-sm text-center mb-2 text-white">Project Description</p>
+            <p className="text-sm text-center text-white">Project Description</p>
           </div>
-          <div className="flex items-center justify-center">
-            <div className="rounded-lg shadow-md p-4">
+          <div className="flex w-full items-center justify-center">
+            <div className="rounded-lg shadow-md">
               <h3 className="text-lg font-semibold mb-2 text-white">Project Card</h3>
-              <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">Button</button>
+              <a href="https://mishabcp.github.io/ToDoList/" target="_blank" rel="noopener noreferrer" className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">Button</a>
             </div>
           </div>
         </div>
 
         {/* Next Two Divs */}
-        <div className="g-col-6" style={{ display: 'flex' }}>
-          <div className="flex items-center justify-center pr-10">
-            <div className="rounded-lg shadow-md p-4">
+        <div className="" style={{ display: 'flex' }}>
+          <div className="w-full flex items-center justify-center">
+            <div className="rounded-lg shadow-md">
               <h3 className="text-lg font-semibold mb-2 text-white">Project Card</h3>
               <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">Button</button>
             </div>
           </div>
-          <div className="flex flex-col items-center justify-center mt-4">
+          <div className="w-full flex flex-col items-center justify-center">
             <h3 className="text-lg lg:text-xl font-semibold mb-2 text-white">Project Name</h3>
-            <p className="text-sm text-center mb-2 text-white">Project Description</p>
+            <p className="text-sm text-center text-white">Project Description</p>
           </div>
         </div>
       </div>
