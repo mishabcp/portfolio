@@ -58,6 +58,10 @@ const SkillsSection = () => {
     'html.svg', 'react.svg', 'css.svg', 'tailwind.svg', 'javascript.svg', 'mysql.svg', 'java.svg'
   ];
 
+  const getImageUrl = (icon) => {
+    return `https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/${icon}`;
+  };
+
   return (
     <section
       ref={skillsRef}
@@ -69,7 +73,7 @@ const SkillsSection = () => {
         <div className="skills-container flex flex-wrap justify-center  gap-2">
           {skillIcons.map((icon, index) => (
             <div key={index} className="skill-item  flex justify-center items-center mb-8 md:mb-16 " style={{ width: getSkillWidth() }}>
-              <img src={`src/assets/${icon}`} alt={`Skill ${index + 1}`} className="w-12 h-12 md:w-16 md:h-16" />
+               <img src={getImageUrl(icon)} alt={`Skill ${index + 1}`} className="w-12 h-12 md:w-16 md:h-16" />
             </div>
           ))}
         </div>
