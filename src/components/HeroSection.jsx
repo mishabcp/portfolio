@@ -1,24 +1,38 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import lottie from 'lottie-web';
+import animationData from '/src/assets/animation.json'; // Import your Lottie animation JSON file
 
 const HeroSection = () => {
+  const animationContainer = useRef(null);
+
+  useEffect(() => {
+    const anim = lottie.loadAnimation({
+      container: animationContainer.current,
+      renderer: 'svg',
+      loop: true,
+      autoplay: true,
+      animationData: animationData,
+    });
+
+    return () => {
+      anim.destroy();
+    };
+  }, []);
+
   const onButtonClick = () => {
     const resumeUrl = 'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/resume.pdf';
 
-    fetch(resumeUrl) // Fetch the PDF file
+    fetch(resumeUrl)
       .then((response) => {
-        return response.blob(); // Convert response to a blob
+        return response.blob();
       })
       .then((blob) => {
-        // Create a URL for the blob
         const url = window.URL.createObjectURL(new Blob([blob]));
-        // Create a temporary link element
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', 'Mishab_Resume.pdf'); // Set the download attribute
-        // Append the link to the body and trigger the click event
+        link.setAttribute('download', 'Mishab_Resume.pdf');
         document.body.appendChild(link);
         link.click();
-        // Clean up by removing the link and revoking the URL
         link.parentNode.removeChild(link);
         window.URL.revokeObjectURL(url);
       })
@@ -28,20 +42,20 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="w-4/5 lg:w-3/5 mx-auto text-white  h-screen flex flex-col justify-center">
-    <div className="container mx-auto text-left animate-slide-in-opacity">
-      {/* Add left padding for small (sm) screen sizes */}
-      <h1 className="text-5xl  md:text-7xl lg:text9xl font-bold mb-4 md:mb-8">Mishab</h1>
-      {/* Adjust font sizes for better readability */}
-      <p className="text-3xl  md:text-5xl lg:text-7xl mb-4 md:mb-8 font-bold">Full Stack Developer</p>
-      {/* Adjust font sizes and padding for the button */}
-      <button onClick={onButtonClick} className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 md:py-3 md:px-8 lg:px-10  mb-0 mt-8 rounded-full shadow-lg">
-        Resume
-      </button>
-    </div>
-  </section>
-  
-
+    <section className="w-4/5 lg:w-3/5  h-screen flex justify-center items-center mx-auto">
+      <div className='sm:flex '> 
+        <div className="mb-10 sm:mb-0 animate-slide-in-opacity w-full">
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold mb-4 md:mb-8">Mishab</h1>
+          <p className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-2 md:mb-2 font-bold">Full Stack Developer</p>
+          <button
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 md:py-3 md:px-8 lg:px-10  mt-8 rounded-full shadow-lg inline-block"
+          >
+            Download Resume
+          </button>
+        </div>  
+        <div className="w-full animate-slide-in-from-right " ref={animationContainer}></div>
+      </div>
+    </section>
   );
 };
 

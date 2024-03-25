@@ -1,11 +1,10 @@
-// SkillsSection.jsx
-
 import React, { useRef, useEffect, useState } from 'react';
 import './SkillSection.css'; // Import the CSS file for SkillsSection
 
 const SkillsSection = () => {
   const skillsRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [skillsPerRow, setSkillsPerRow] = useState(3); // Default skills per row for smaller screens
 
   useEffect(() => {
     const skillsSection = skillsRef.current;
@@ -23,10 +22,41 @@ const SkillsSection = () => {
 
     window.addEventListener('scroll', handleScroll);
 
+    // Update skills per row based on screen size
+    // Update skills per row based on screen size
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        if (skillsPerRow !== 4) {
+          setSkillsPerRow(4); 
+        }
+      } else {
+        if (skillsPerRow !== 3) {
+          setSkillsPerRow(2); 
+        }
+      }
+    };
+
+
+    window.addEventListener('resize', handleResize);
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  // Dynamically calculate width for each skill item based on skills per row
+  const getSkillWidth = () => {
+    if (window.innerWidth >= 1024) {
+      return `${100 / 5}%`; 
+    } else {
+      return `${100 / 4}%`; 
+    }
+  };
+
+  const skillIcons = [
+    'html.svg', 'react.svg', 'css.svg', 'tailwind.svg', 'javascript.svg', 'mysql.svg', 'java.svg'
+  ];
 
   return (
     <section
@@ -34,38 +64,17 @@ const SkillsSection = () => {
       id="skills-section"
       className={`skills-section-container w-4/5 lg:w-3/5 mx-auto mb-20 lg:mb-32 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-in-out `}
     >
-      <div className="container mx-auto">
-        <h2 className="skills-section-heading text-4xl md:text-6xl font-bold mb-8 md:mb-12 text-center">Skills</h2>
-        <div className="grid-container grid gap-4 md:gap-6 md:grid-cols-3">
-          <div className="skill-card rounded-2xl shadow-md p-4 md:p-6">
-            <h3 className="text-lg md:text-xl font-bold mb-3">Frontend</h3>
-            <ul className="skill-list list-disc list-inside">
-              <li className="text-md md:text-lg">HTML</li>
-              <li className="text-md md:text-lg">CSS</li>
-              <li className="text-md md:text-lg">JAVASCRIPT</li>
-              <li className="text-md md:text-lg">REACT.JS</li>
-              <li className="text-md md:text-lg">TAILWIND CSS</li>
-            </ul>
-          </div>
-          <div className="skill-card rounded-2xl shadow-md p-4 md:p-6">
-            <h3 className="text-lg md:text-xl font-bold mb-3">Backend</h3>
-            <ul className="skill-list list-disc list-inside">
-              <li className="text-md md:text-lg">JAVA</li>
-              <li className="text-md md:text-lg">JDBC</li>
-              <li className="text-md md:text-lg">HIBERNATE</li>
-              <li className="text-md md:text-lg">SERVLETS</li>
-            </ul>
-          </div>
-          <div className="skill-card rounded-2xl shadow-md p-4 md:p-6">
-            <h3 className="text-lg md:text-xl font-bold mb-3">Other</h3>
-            <ul className="skill-list list-disc list-inside">
-              <li className="text-md md:text-lg">MySQL</li>
-              <li className="text-md md:text-lg">FIGMA</li>
-            </ul>
-          </div>
+      <div className="container mx-auto md:w-4/5">
+        <h2 className="skills-section-heading text-4xl md:text-6xl font-bold mb-20 md:mb-24 text-center">Skills</h2>
+        <div className="skills-container flex flex-wrap justify-center  gap-2">
+          {skillIcons.map((icon, index) => (
+            <div key={index} className="skill-item  flex justify-center items-center mb-8 md:mb-16 " style={{ width: getSkillWidth() }}>
+              <img src={`src/assets/${icon}`} alt={`Skill ${index + 1}`} className="w-12 h-12 md:w-16 md:h-16" />
+            </div>
+          ))}
         </div>
       </div>
-      <hr className='w-4/5 mx-auto mb-20 mt-20 lg:mb-24 lg:mt-28'/>
+      <hr className="w-4/5 mx-auto mb-20 mt-20 lg:mb-24 lg:mt-28" />
     </section>
   );
 };

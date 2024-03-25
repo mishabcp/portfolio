@@ -28,3 +28,21 @@
   * {
     color: white;
   }
+
+
+  @keyframes slideInFromRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Apply the animation to the element */
+  .animate-slide-in-from-right {
+    animation: slideInFromRight 1.5s ease-in-out;
+  }
+  
