@@ -66,7 +66,7 @@ const SkillsSection = () => {
     <section
       ref={skillsRef}
       id="skills-section"
-      className={`skills-section-container w-4/5 lg:w-3/5 mx-auto mb-20 lg:mb-32 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-in-out `}
+      className={`skills-section-container bg-white w-4/5 lg:w-3/5 mx-auto mb-20 lg:mb-32 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-in-out `}
     >
       <div className="container mx-auto md:w-4/5">
         <h2 className="skills-section-heading text-4xl md:text-6xl font-bold mb-20 md:mb-24 text-center">Skills</h2>
