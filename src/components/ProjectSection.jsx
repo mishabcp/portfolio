@@ -48,7 +48,7 @@ const ProjectSection = () => {
           <div className="flex w-full items-center justify-center">
           <div className="xl:w-4/5 flex flex-col items-center justify-center mb-3 px-2">
             <img
-              src="src/assets/TO.png"
+              src="https://github.com/mishabcp/portfolio/blob/main/src/assets/TO.png"
               alt="Project Image"
               className="mb-3 w-full h-auto rounded-lg"
             />
