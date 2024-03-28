@@ -90,17 +90,17 @@ const ContactSection = () => {
       <div className="flex flex-col md:flex-row justify-between mx-auto">
         {/* First Div */}
         <div className="flex md:flex-col items-center mb-16 md:mb-0 mr-0 md:mr-3 w-full md:w-1/3 pr-6 pl-6 sm:pr-10 sm:pl-10 md:pr-0 md:pl-0">
-          <div className="flex flex-row items-center justify-center h-full md:mb-3 mr-2 border border-gray-300 rounded-lg custom-shadow w-full pt-3 pb-3">
+          <div className="flex flex-row items-center justify-center h-full md:mb-3 mr-2 border border-gray-300 rounded-lg shadow-all-sides w-full pt-3 pb-3">
             <a href="https://github.com/mishabcp" target="_blank" rel="noopener noreferrer" className="hover:underline text-white">
               <FaGithub className="w-10 h-10 text-blue-500 mr-2" />
             </a>
           </div>
-          <div className="flex flex-row items-center justify-center h-full md:mb-3 mr-2 border border-gray-300 rounded-lg custom-shadow w-full pt-3 pb-3">
+          <div className="flex flex-row items-center justify-center h-full md:mb-3 mr-2 border border-gray-300 rounded-lg shadow-all-sides w-full pt-3 pb-3">
             <a href="tel:+918848659419" className="hover:underline text-white">
               <FaPhone className="w-10 h-10 text-blue-500 mr-2" />
             </a>
           </div>
-          <div className="flex flex-row items-center justify-center h-full border border-gray-300 rounded-lg custom-shadow w-full pt-3  pb-3">
+          <div className="flex flex-row items-center justify-center h-full border border-gray-300 rounded-lg shadow-all-sides w-full pt-3  pb-3">
             <a href="mailto:mishabcp01@gmail.com" className="hover:underline text-white">
               <FaEnvelope className="w-10 h-10 text-blue-500 mr-2" />
             </a>
@@ -108,7 +108,7 @@ const ContactSection = () => {
         </div>
 
         {/* Second Div */}
-        <div className="flex flex-col items-center ml-0 md:ml-3 w-full md:w-2/3 border custom-shadow border-gray-300 rounded-lg p-10">
+        <div className="flex flex-col items-center ml-0 md:ml-3 w-full md:w-2/3 border shadow-all-sides border-gray-300 rounded-lg p-10">
           <form onSubmit={onSubmit} className="flex flex-col items-center w-full">
             <input
               type="text"

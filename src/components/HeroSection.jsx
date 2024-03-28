@@ -42,7 +42,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="w-4/5 lg:w-3/5  h-screen flex justify-center items-center mx-auto">
+    <section className="w-4/5 2xl:w-3/5 h-screen flex justify-center items-center mx-auto">
       <div className='sm:flex '> 
         <div className="mb-10 sm:mb-0 md:mt-20 lg:mt-10 xl:mt-0 2xl:mt-20 animate-slide-in-opacity w-full">
           <h1 className="text-4xl sm:text-5xl lg:text-7xl xl:text-8xl font-bold mb-4 md:mb-8">Mishab</h1>

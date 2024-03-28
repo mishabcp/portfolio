@@ -55,4 +55,7 @@
     z-index: -1; /* Ensures particles are behind other content */
   }
   
+  .shadow-all-sides {
+    box-shadow: rgba(0, 0, 0, 0.0) 0px 0px 0px, rgba(0, 0, 0, 0.4) 0px 3px 10px;
+  }
   
