@@ -5,12 +5,20 @@ const ProjectSection = () => {
   const projectRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  const handleLiveLinkClick = () => {
+  const handleLiveLinkClick1 = () => {
     window.open('https://mishabcp.github.io/ToDoList/', '_blank');
   };
   
-  const handleGithubLinkClick = () => {
+  const handleGithubLinkClick1 = () => {
     window.open('https://github.com/mishabcp/ToDoList', '_blank');
+  };
+
+  const handleLiveLinkClick2 = () => {
+    window.open('https://mishabcp.github.io/AlgoViz/', '_blank');
+  };
+  
+  const handleGithubLinkClick2 = () => {
+    window.open('https://github.com/mishabcp/AlgoViz', '_blank');
   };
   
 
@@ -53,11 +61,11 @@ const ProjectSection = () => {
               className="mb-3 w-full h-auto rounded-lg"
             />
             <div className="flex space-x-40">
-              <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full" onClick={handleLiveLinkClick}>
+              <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full" onClick={handleLiveLinkClick1}>
                 <FaExternalLinkAlt className="mr-2" />
               </button>
 
-              <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full" onClick={handleGithubLinkClick}>
+              <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full" onClick={handleGithubLinkClick1}>
                 <FaGithub className="mr-2" />
               </button>
             </div>
@@ -71,18 +79,32 @@ const ProjectSection = () => {
         </div>
 
         {/* Next Two Divs */}
-        <div className="" style={{ display: 'flex' }}>
-          <div className="w-full flex border items-center justify-center">
-            <div className="rounded-lg shadow-md">
-              <h3 className="text-lg font-semibold mb-2">Project Card</h3>
-              <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">Button</button>
-            </div>
+        <div className="md:flex mb-20 pb-4 pt-2 md:pb-0 md:pt-0 md:py-0 rounded-lg md:rounded-none shadow-all-sides shadow-lg md:shadow-none ">
+          <div className="flex flex-col w-full rounded-xl justify-center lg:mb-10">
+            <h2 className="text-xl 2xl:text-2xl md:ml-10 font-bold lg:ml-16 xl:ml-20 m-3">AlgoViz</h2>
+            <p className="text-md 2xl:text-xl m-2 xl:text-lg md:ml-10 lg:ml-16 xl:ml-20">AlgoViz is a React project designed to visually demonstrate fundamental sorting (Bubble, Merge, Quick) and searching (Linear, Binary) algorithms. Through interactive simulations, users can input custom arrays or use random data to observe these algorithms in action, gaining insights into their efficiency and functionality.</p>
           </div>
-          <div className="w-full border flex flex-col items-center justify-center">
-            <h3 className="text-lg lg:text-xl font-semibold mb-2">project 2</h3>
-            <p className="text-sm text-center text-white">description</p>
+          <div className="flex w-full items-center justify-center">
+            <div className="xl:w-4/5 flex flex-col items-center justify-center mb-3 px-2">
+              <img
+                src="https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/sas.png"
+                alt="Project Image"
+                className="mb-3 w-full h-auto rounded-lg"
+              />
+              <div className="flex space-x-40">
+                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full" onClick={handleLiveLinkClick2}>
+                  <FaExternalLinkAlt className="mr-2" />
+                </button>
+
+                <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full" onClick={handleGithubLinkClick2}>
+                  <FaGithub className="mr-2" />
+                </button>
+              </div>
+            </div>
+
           </div>
         </div>
+        
       </div>
       <hr className='w-4/5 mx-auto mb-20 mt-20 lg:mb-24 lg:mt-28'/>
     </div>
