@@ -84,7 +84,7 @@ const ContactSection = () => {
     <section
       id='Contact-Section'
       ref={contactRef}
-      className={`container mx-auto w-3/4 lg:w-1/2 mb-20 lg:mb-40 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-in-out `}
+      className={`container mx-auto w-3/4 lg:w-1/2 mb-10 lg:mb-20 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-in-out `}
     >
       <h2 className="text-center text-4xl md:text-6xl font-bold mb-10 md:mb-12">Contact</h2>
       <div className="flex flex-col md:flex-row justify-between mx-auto">
