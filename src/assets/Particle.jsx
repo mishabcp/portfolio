@@ -47,19 +47,19 @@ export default function Particle() {
                   quantity: 2,
                 },
                 grab: {
-                  distance: 150,
+                  distance: 100,
                 },
               },
             },
             particles: {
               color: {
-                value: "#0A0ECD",
+                value: "#001E48",
               },
               links: {
-                color: "#26F2F2",
+                color: "#001E48",
                 distance: 100,
                 enable: true,
-                opacity: 0.5,
+                opacity: 0.3,
                 width: 1,
               },
               move: {
@@ -86,7 +86,7 @@ export default function Particle() {
                 type: "circle",
               },
               size: {
-                value: { min: 1, max: 4 },
+                value: { min: 1, max: 1 },
               },
             },
             detectRetina: true,
