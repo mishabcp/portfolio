@@ -40,7 +40,7 @@ const Header = () => {
         {/* Logo */}
         <div className={`flex items-center ${isMenuOpen ? 'hidden' : 'block'}`}>
           <a href="#" onClick={() => window.location.reload()}>
-            <img src="src/assets/portfolio-logo.png" alt="Logo" className="h-8 w-auto mr-2" />
+            <img src="https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/portfolio-logo.png" alt="Logo" className="h-8 w-auto mr-2" />
           </a>
           {/* Replace "Your Brand" with your brand name if you don't have a logo */}
         </div>
