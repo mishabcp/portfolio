@@ -20,6 +20,14 @@ const ProjectSection = () => {
   const handleGithubLinkClick2 = () => {
     window.open('https://github.com/mishabcp/AlgoViz', '_blank');
   };
+
+  const handleProjectDetailsLink = () => {
+
+  };
+
+  const handleGithubLinkClick3 = () => {
+    window.open('https://github.com/mishabcp/FoodDeliveryApp', '_blank');
+  };
   
 
   useEffect(() => {
@@ -102,6 +110,33 @@ const ProjectSection = () => {
               </div>
             </div>
 
+          </div>
+        </div>
+
+        {/* next two divs */}
+        <div className="md:flex mb-20 pb-4 pt-2 md:pb-0 md:pt-0 md:py-0 rounded-lg md:rounded-none shadow-all-sides shadow-lg md:shadow-none ">
+          <div className="flex w-full items-center justify-center">
+          <div className="xl:w-4/5 flex flex-col items-center justify-center mb-3 px-2">
+            <img
+              src="https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/fda.png"
+              alt="Project Image"
+              className="mb-3 w-full h-auto rounded-lg"
+            />
+            <div className="flex space-x-40">
+              <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full" onClick={handleProjectDetailsLink}>
+                <FaExternalLinkAlt className="mr-2" />
+              </button>
+
+              <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full" onClick={handleGithubLinkClick3}>
+                <FaGithub className="mr-2" />
+              </button>
+            </div>
+          </div>
+
+          </div>
+          <div className="flex flex-col w-full rounded-xl justify-center lg:mb-10">
+            <h2 className="text-xl 2xl:text-2xl md:ml-10 font-bold lg:ml-16 xl:ml-20 m-3">Swift Eats</h2>
+            <p className="text-md 2xl:text-xl m-2 xl:text-lg md:ml-10 lg:ml-16 xl:ml-20">A full-stack web app for food delivery, featuring an intuitive front end with HTML, Tailwind CSS, and JavaScript. Backed by Java Servlets and JDBC for server-side logic and MySQL for data storage. Enables users to browse menus, place orders securely, and enjoy responsive design across devices.</p>
           </div>
         </div>
         
