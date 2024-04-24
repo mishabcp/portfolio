@@ -27,7 +27,7 @@ const Project3 = () => {
   const images = [
     'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/cart page.png',
     'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/homepage.png',
-    'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/reataurants page.png',
+    'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/restaurants page.png',
     'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/orders page.png',
     'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/menu page.png',
   ];
@@ -80,7 +80,7 @@ const Project3 = () => {
           <div className="flex w-full items-center justify-center">
           <div className="flex flex-col items-center justify-center mb-3 px-2">
             <img
-              src="https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/project structure.png"
+              src="https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/MVC.png"
               alt="Project Image"
               className="mb-3 w-full h-auto rounded-lg"
             />
@@ -97,7 +97,7 @@ const Project3 = () => {
           <Slider {...settings}>
             {images.map((image, index) => (
               <div key={index} className='m-4'> {/* Add a unique key prop to each child in the array */}
-                <img src={image} alt={`Image ${index}`} className="h-80 rounded-lg" />
+                <img src={image} alt={`Image ${index}`} className="h-72 w-auto rounded-lg" />
               </div>
             ))}
           </Slider>
