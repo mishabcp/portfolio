@@ -1,5 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+
+
 
 const ProjectSection = () => {
   const projectRef = useRef(null);
@@ -19,10 +22,6 @@ const ProjectSection = () => {
   
   const handleGithubLinkClick2 = () => {
     window.open('https://github.com/mishabcp/AlgoViz', '_blank');
-  };
-
-  const handleProjectDetailsLink = () => {
-
   };
 
   const handleGithubLinkClick3 = () => {
@@ -123,9 +122,11 @@ const ProjectSection = () => {
               className="mb-3 w-full h-auto rounded-lg"
             />
             <div className="flex space-x-40">
-              <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full" onClick={handleProjectDetailsLink}>
-                <FaExternalLinkAlt className="mr-2" />
-              </button>
+              <Link to="/new-page">
+                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full">
+                  <FaExternalLinkAlt className="mr-2" />
+                </button>
+              </Link>
 
               <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full" onClick={handleGithubLinkClick3}>
                 <FaGithub className="mr-2" />
