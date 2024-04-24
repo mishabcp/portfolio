@@ -34,7 +34,7 @@ const Project3 = () => {
   
   
   return (
-    <div className="flex flex-col mb-36 min-h-screen"> {/* Use flexbox to make sure the footer sticks to the bottom */}
+    <div className="flex flex-col mb-32 min-h-screen"> {/* Use flexbox to make sure the footer sticks to the bottom */}
       <Header />
       <main className="w-4/5 2xl:w-3/5 mx-auto flex-1">
         <h1 className='font-bold text-6xl flex items-center justify-center mb-36 mt-44'>Project Details</h1>
