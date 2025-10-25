@@ -1,0 +1,2 @@
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/WobbleUpdater-B1q-LIn8.js","assets/index-XgrrP6Ri.js","assets/index-BttXQbzh.css"])))=>i.map(i=>d[i]);
+import{_ as n}from"./index-XgrrP6Ri.js";async function i(t,a=!0){await t.addParticleUpdater("wobble",async e=>{const{WobbleUpdater:r}=await n(async()=>{const{WobbleUpdater:o}=await import("./WobbleUpdater-B1q-LIn8.js");return{WobbleUpdater:o}},__vite__mapDeps([0,1,2]));return new r(e)},a)}export{i as loadWobbleUpdater};
