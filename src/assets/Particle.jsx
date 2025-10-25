@@ -1,19 +1,31 @@
 import { useCallback, useEffect, useState } from "react";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim"; // Change to loadSlim
 
-import { loadFull } from "tsparticles";
 export default function Particle() {
   const [init, setInit] = useState(false);
+
   useEffect(() => {
-    console.log("init");
+    if (init) return;
+    console.time("ParticlesLoad");
+    console.log("Starting particle engine initialization");
     initParticlesEngine(async (engine) => {
-      await loadFull(engine);
+      console.time("LoadFull");
+      await loadSlim(engine); // Change to loadSlim
+      console.timeEnd("LoadFull");
     }).then(() => {
+      console.log("Particle engine initialized");
       setInit(true);
+      console.timeEnd("ParticlesLoad");
     });
-  }, []);
+
+    return () => {
+      console.log("Cleaning up particle engine");
+    };
+  }, [init]);
 
   const particlesLoaded = (container) => {
+    console.log("Particles loaded:", container);
   };
 
   return (
@@ -27,7 +39,7 @@ export default function Particle() {
           }}
           options={{
             background: {
-              color: "#ffffff", // Set background color to white
+              color: "#ffffff",
             },
             fpsLimit: 120,
             interactivity: {
