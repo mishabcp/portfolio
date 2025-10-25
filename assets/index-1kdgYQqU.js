@@ -1,2 +1,0 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/TwinkleUpdater-CMDX7Bk6.js","assets/OptionsColor-CHai0-E7.js","assets/index-XgrrP6Ri.js","assets/index-BttXQbzh.css"])))=>i.map(i=>d[i]);
-import{_ as n}from"./index-XgrrP6Ri.js";async function o(t,a=!0){await t.addParticleUpdater("twinkle",async()=>{const{TwinkleUpdater:e}=await n(async()=>{const{TwinkleUpdater:r}=await import("./TwinkleUpdater-CMDX7Bk6.js");return{TwinkleUpdater:r}},__vite__mapDeps([0,1,2,3]));return new e},a)}export{o as loadTwinkleUpdater};
