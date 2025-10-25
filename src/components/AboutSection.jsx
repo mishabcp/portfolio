@@ -34,10 +34,10 @@ const AboutSection = () => {
       <div className="container mx-auto text-center">
         <h2 className="text-4xl md:text-6xl font-bold mb-8 md:mb-12">About Me</h2>
         <p className="text-md md:text-lg 2xl:text-xl mb-4 md:mb-8">
-          As a recent B.Tech graduate with a passion for full-stack web development, I am constantly seeking opportunities to expand my skill set and stay up-to-date with evolving web technologies. With a strong foundation in both frontend and backend development, I am well-equipped to tackle challenges and drive innovation in the ever-changing landscape of web development.
+          I'm a Full Stack Developer with 2 years of professional experience specializing in fintech and Enterprise Resource Planning (ERP) systems. Currently based in Dubai, I have a strong track record of building and maintaining complex web applications using PHP, Laravel, CodeIgniter, JavaScript, and MySQL. My expertise spans backend architecture, RESTful API development and integration, and database optimization.
         </p>
         <p className="text-md md:text-lg 2xl:text-xl mb-4 md:mb-8">
-          I am proficient in React.js, a powerful frontend library that allows me to create dynamic and interactive web applications with ease. My experience with React has enabled me to build efficient and scalable frontend solutions, leveraging its component-based architecture and state management capabilities.
+          At Netplex IT Solutions, I've led API development for PlexPay, a UAE-based fintech recharge platform, and built ISL, a comprehensive Laboratory Information Management System. I'm passionate about creating scalable solutions, optimizing performance, and delivering quality software that meets real business needs. Beyond coding, I excel at client communication, technical documentation, and providing end-user training for production systems.
         </p>
       </div>
       <hr className='w-4/5 mx-auto mb-10 mt-10 lg:mb-16 lg:mt-16'/>

@@ -3,7 +3,8 @@ import React from 'react';
 import Header from './components/Header.jsx';
 import HeroSection from './components/HeroSection.jsx';
 import AboutSection from './components/AboutSection.jsx';
-import SkillsSection from './components/SkillsSection.jsx'; // Import the SkillsSection component
+import WorkExperienceSection from './components/WorkExperienceSection.jsx';
+import SkillsSection from './components/SkillsSection.jsx'; 
 import ProjectSection from './components/ProjectSection.jsx';
 import ContactSection from './components/ContactSection.jsx';
 import Footer from './components/Footer.jsx';
@@ -19,6 +20,9 @@ const Home = () => {
 
       {/* About Section Component */}
       <AboutSection />
+
+      {/* Work Experience Section Component */}
+      <WorkExperienceSection />
 
       {/* Skills Section Component */}
       <SkillsSection />

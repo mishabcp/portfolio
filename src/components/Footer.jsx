@@ -1,22 +1,56 @@
 import React from 'react';
-import { scrollToSection } from './Header'; // Importing the scrollToSection function from the Header component
+import { scrollToSection } from './Header';
 import '/src/index.css';
 
 const Footer = () => {
   const handleClick = (sectionId, event) => {
-    event.preventDefault(); // Prevent default action of anchor tag
+    event.preventDefault();
     scrollToSection(sectionId);
   };
 
   return (
-    <footer className=" text-white relative rounded-t-3xl"> {/* Apply rounded-t-lg class here */}
-      <div className="container mx-auto text-center relative z-10 py-4">
-        <p className='mt-10'>&copy; 2024 Your Portfolio. All rights reserved.</p>
-        <div className="mb-8 mt-6">
-          <a href="#about-section" className="text-blue-500 hover:underline mx-2" onClick={(e) => handleClick('about-section', e)}>About</a>
-          <a href="#skills-section" className="text-blue-500 hover:underline mx-2" onClick={(e) => handleClick('skills-section', e)}>Skills</a>
-          <a href="#Project-Section" className="text-blue-500 hover:underline mx-2" onClick={(e) => handleClick('Project-Section', e)}>Projects</a>
-          <a href="#Contact-Section" className="text-blue-500 hover:underline mx-2" onClick={(e) => handleClick('Contact-Section', e)}>Contact</a>
+    <footer className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl hover:shadow-xl transition-all duration-300">
+      <hr className="w-4/5 mx-auto mb-10 mt-10 lg:mb-16 lg:mt-16" />
+      <div className="container mx-auto text-center p-6 md:p-8">
+        <p className="text-gray-700 text-sm md:text-base font-medium mt-4 mb-4">
+          &copy; Mishab CP | Portfolio 2025
+        </p>
+        <div className="flex justify-center gap-4">
+          <a
+            href="#about-section"
+            className="text-gray-800 hover:text-blue-500 font-medium mx-2"
+            onClick={(e) => handleClick('about-section', e)}
+          >
+            About
+          </a>
+          <a
+            href="#skills-section"
+            className="text-gray-800 hover:text-blue-500 font-medium mx-2"
+            onClick={(e) => handleClick('skills-section', e)}
+          >
+            Skills
+          </a>
+          <a
+            href="#experience-section"
+            className="text-gray-800 hover:text-blue-500 font-medium mx-2"
+            onClick={(e) => handleClick('experience-section', e)}
+          >
+            Experience
+          </a>
+          <a
+            href="#Project-Section"
+            className="text-gray-800 hover:text-blue-500 font-medium mx-2"
+            onClick={(e) => handleClick('Project-Section', e)}
+          >
+            Projects
+          </a>
+          <a
+            href="#Contact-Section"
+            className="text-gray-800 hover:text-blue-500 font-medium mx-2"
+            onClick={(e) => handleClick('Contact-Section', e)}
+          >
+            Contact
+          </a>
         </div>
       </div>
     </footer>

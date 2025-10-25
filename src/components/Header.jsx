@@ -3,10 +3,14 @@ import React, { useState, useRef, useEffect } from 'react';
 const scrollToSection = (sectionId) => {
   const section = document.getElementById(sectionId);
   if (section) {
-    // Increase the yOffset value to move the section higher within the viewport
-    const yOffset = -window.innerHeight / 2 + section.offsetHeight / 2 + 200; // Adjust as needed
-    section.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'nearest' });
-    window.scrollBy({ top: yOffset, behavior: 'smooth' });
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Optional: Adjust for fixed header (e.g., 80px height)
+    const headerOffset = 80;
+    const sectionPosition = section.getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({
+      top: sectionPosition - headerOffset,
+      behavior: 'smooth',
+    });
   }
 };
 
@@ -14,7 +18,6 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  // Function to handle clicks outside the dropdown menu
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
       setIsMenuOpen(false);
@@ -22,9 +25,7 @@ const Header = () => {
   };
 
   useEffect(() => {
-    // Add event listener to detect clicks outside the dropdown menu
     document.addEventListener('mousedown', handleClickOutside);
-    // Cleanup function to remove event listener
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -34,15 +35,23 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleClick = (sectionId, event) => {
+    event.preventDefault();
+    scrollToSection(sectionId);
+  };
+
   return (
-    <header className="bg-white py-4 md:py-6 px-8 md:px-8  fixed top-0 left-0 right-0 mx-auto shadow-xl rounded-b-xl z-50">
-  <div className="container flex items-center justify-between mx-auto">
+    <header className="bg-white py-4 md:py-6 px-8 md:px-8 fixed top-0 left-0 right-0 mx-auto shadow-xl rounded-b-xl z-50">
+      <div className="container flex items-center justify-between mx-auto">
         {/* Logo */}
         <div className={`flex items-center ${isMenuOpen ? 'hidden' : 'block'}`}>
           <a href="#" onClick={() => window.location.reload()}>
-            <img src="https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/portfolio-logo.png" alt="Logo" className="h-8 w-auto mr-2" />
+            <img
+              src="https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/portfolio-logo.png"
+              alt="Logo"
+              className="h-8 w-auto mr-2"
+            />
           </a>
-          {/* Replace "Your Brand" with your brand name if you don't have a logo */}
         </div>
 
         {/* Mobile Menu Button */}
@@ -72,24 +81,49 @@ const Header = () => {
         <nav className={`md:flex md:items-center md:w-auto ${isMenuOpen ? 'block' : 'hidden'}`} ref={dropdownRef}>
           <ul className="flex flex-col md:flex-row gap-6 md:gap-10">
             <li>
-              <button onClick={() => scrollToSection('about-section')} className="hover:text-gray-300 text-base md:text-lg">
+              <a
+                href="#about-section"
+                onClick={(e) => handleClick('about-section', e)}
+                className="hover:text-gray-300 text-base md:text-lg"
+              >
                 About
-              </button>
+              </a>
             </li>
             <li>
-              <button onClick={() => scrollToSection('skills-section')} className="hover:text-gray-300 text-base md:text-lg">
+              <a
+                href="#experience-section"
+                onClick={(e) => handleClick('experience-section', e)}
+                className="hover:text-gray-300 text-base md:text-lg"
+              >
+                Experience
+              </a>
+            </li>
+            <li>
+              <a
+                href="#skills-section"
+                onClick={(e) => handleClick('skills-section', e)}
+                className="hover:text-gray-300 text-base md:text-lg"
+              >
                 Skills
-              </button>
+              </a>
             </li>
             <li>
-              <button onClick={() => scrollToSection('Project-Section')} className="hover:text-gray-300 text-base md:text-lg">
+              <a
+                href="#Project-Section"
+                onClick={(e) => handleClick('Project-Section', e)}
+                className="hover:text-gray-300 text-base md:text-lg"
+              >
                 Projects
-              </button>
+              </a>
             </li>
             <li>
-              <button onClick={() => scrollToSection('Contact-Section')} className="hover:text-gray-300 text-base md:text-lg">
+              <a
+                href="#Contact-Section"
+                onClick={(e) => handleClick('Contact-Section', e)}
+                className="hover:text-gray-300 text-base md:text-lg"
+              >
                 Contact
-              </button>
+              </a>
             </li>
           </ul>
         </nav>
