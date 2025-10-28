@@ -82,41 +82,41 @@ const ContactSection = () => {
     <section
       id="Contact-Section"
       ref={contactRef}
-      className={`container mx-auto w-3/4 lg:w-1/2 mb-10 lg:mb-20 ${
+      className={`container mx-auto px-4 sm:px-6 w-full sm:w-11/12 md:w-3/4 lg:w-1/2 mb-8 sm:mb-10 lg:mb-12 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
       } transition-all duration-1000 ease-in-out`}
     >
-      <h2 className="text-center text-4xl md:text-6xl font-bold mb-10 md:mb-12">Contact</h2>
-      <div className="flex flex-col md:flex-row justify-between mx-auto gap-6">
-        {/* First Div - Social Links */}
-        <div className="flex md:flex-col items-center mb-16 md:mb-0 mr-0 md:mr-3 w-full md:w-1/3 pr-6 pl-6 sm:pr-10 sm:pl-10 md:pr-0 md:pl-0">
-          <div className="flex flex-row items-center justify-center h-full md:mb-3 mr-2 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg w-full pt-3 pb-3 hover:shadow-md transition-all duration-300">
+      <h2 className="text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-10 md:mb-12">Contact</h2>
+      <div className="flex flex-col gap-6">
+        {/* Social Links */}
+        <div className="flex flex-row flex-wrap justify-center gap-4 sm:gap-6 w-full">
+          <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg w-full sm:w-48 pt-3 pb-3 hover:shadow-md transition-all duration-300">
             <a
               href="https://github.com/mishabcp"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center hover:underline text-gray-800"
+              className="flex items-center justify-center hover:underline text-gray-800 text-sm sm:text-base"
             >
-              <FaGithub className="w-10 h-10 text-blue-500 mr-2" />
+              <FaGithub className="w-8 h-8 sm:w-10 sm:h-10 text-blue-500 mr-2" />
               GitHub
             </a>
           </div>
-          <div className="flex flex-row items-center justify-center h-full md:mb-3 mr-2 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg w-full pt-3 pb-3 hover:shadow-md transition-all duration-300">
-            <a href="tel:+918848659419" className="flex items-center justify-center hover:underline text-gray-800">
-              <FaPhone className="w-10 h-10 text-blue-500 mr-2" />
+          <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg w-full sm:w-48 pt-3 pb-3 hover:shadow-md transition-all duration-300">
+            <a href="tel:+918848659419" className="flex items-center justify-center hover:underline text-gray-800 text-sm sm:text-base">
+              <FaPhone className="w-8 h-8 sm:w-10 sm:h-10 text-blue-500 mr-2" />
               Phone
             </a>
           </div>
-          <div className="flex flex-row items-center justify-center h-full bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg w-full pt-3 pb-3 hover:shadow-md transition-all duration-300">
-            <a href="mailto:mishabcp01@gmail.com" className="flex items-center justify-center hover:underline text-gray-800">
-              <FaEnvelope className="w-10 h-10 text-blue-500 mr-2" />
+          <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg w-full sm:w-48 pt-3 pb-3 hover:shadow-md transition-all duration-300">
+            <a href="mailto:mishabcp01@gmail.com" className="flex items-center justify-center hover:underline text-gray-800 text-sm sm:text-base">
+              <FaEnvelope className="w-8 h-8 sm:w-10 sm:h-10 text-blue-500 mr-2" />
               Email
             </a>
           </div>
         </div>
 
-        {/* Second Div - Contact Form */}
-        <div className="flex flex-col items-center ml-0 md:ml-3 w-full md:w-2/3 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-6 md:p-8 hover:shadow-xl transition-all duration-300">
+        {/* Contact Form */}
+        <div className="flex flex-col items-center w-full bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-4 sm:p-6 md:p-8 hover:shadow-xl transition-all duration-300">
           <form onSubmit={onSubmit} className="flex flex-col items-center w-full">
             <input
               type="text"
@@ -124,7 +124,7 @@ const ContactSection = () => {
               value={formData.name}
               onChange={handleInputChange}
               placeholder="Name"
-              className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-black"
+              className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-black text-sm sm:text-base"
               required
             />
             <input
@@ -133,7 +133,7 @@ const ContactSection = () => {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="Email"
-              className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-black"
+              className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-black text-sm sm:text-base"
               required
             />
             <textarea
@@ -142,27 +142,33 @@ const ContactSection = () => {
               onChange={handleInputChange}
               placeholder="Message"
               rows="4"
-              className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-black"
+              className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-black text-sm sm:text-base"
               required
             ></textarea>
             <button
               type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white shadow-md font-bold py-2 px-4 rounded-full mt-4 disabled:opacity-50 disabled:pointer-events-none"
+              className="bg-blue-500 hover:bg-blue-600 text-white shadow-md font-bold py-2 px-4 rounded-full mt-4 disabled:opacity-50 disabled:pointer-events-none text-sm sm:text-base"
             >
               Send Message
             </button>
           </form>
 
           {popupMessage && (
-            <div className="fixed top-0 left-0 w-full h-full bg-opacity-50 flex items-center justify-center">
-              <div className="bg-white p-4 rounded-xl shadow-2xl">
-                <p className="text-lg text-black">{popupMessage}</p>
+            <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white p-4 sm:p-6 rounded-xl shadow-2xl max-w-sm w-full">
+                <p className="text-base sm:text-lg text-black text-center">{popupMessage}</p>
+                <button
+                  onClick={() => setPopupMessage('')}
+                  className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded-full text-sm sm:text-base"
+                >
+                  Close
+                </button>
               </div>
             </div>
           )}
         </div>
       </div>
-      <hr className="w-4/5 mx-auto mb-10 mt-10 lg:mb-16 lg:mt-16" />
+      <hr className="w-full sm:w-4/5 mx-auto mb-8 sm:mb-10 mt-8 sm:mt-10 lg:mb-12 lg:mt-12" />
     </section>
   );
 };
