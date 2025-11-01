@@ -1,48 +1,34 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { FaGithub, FaPhone, FaEnvelope } from 'react-icons/fa';
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { Github, Mail, Phone, Send, CheckCircle, AlertCircle } from 'lucide-react';
 
 const ContactSection = () => {
-  const contactRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [popupMessage, setPopupMessage] = useState('');
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true
+  });
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
 
-  useEffect(() => {
-    const contactSection = contactRef.current;
-
-    const handleScroll = () => {
-      const top = contactSection.getBoundingClientRect().top;
-      const windowHeight = window.innerHeight;
-
-      if (top < windowHeight * 0.75) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({
-      ...prevData,
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
       [name]: value
     }));
   };
 
-  const onSubmit = async (event) => {
-    event.preventDefault();
-    setPopupMessage('Sending....');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
 
     const formDataToSend = new FormData();
     formDataToSend.append('access_key', 'b118b50d-7294-45cd-9a5e-0b80604cea25');
@@ -59,116 +45,212 @@ const ContactSection = () => {
       const data = await response.json();
 
       if (data.success) {
-        setPopupMessage('Form Submitted Successfully');
-        setFormData({
-          name: '',
-          email: '',
-          message: ''
-        });
-        setTimeout(() => {
-          setPopupMessage('');
-        }, 1500);
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => setSubmitStatus(null), 3000);
       } else {
-        console.log('Error', data);
-        setPopupMessage(data.message);
+        setSubmitStatus('error');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      setPopupMessage('An error occurred. Please try again later.');
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
+  const contactMethods = [
+    {
+      icon: Github,
+      label: 'GitHub',
+      value: 'mishabcp',
+      href: 'https://github.com/mishabcp',
+      color: 'from-gray-400 to-gray-600'
+    },
+    {
+      icon: Mail,
+      label: 'Email',
+      value: 'mishabcp01@gmail.com',
+      href: 'mailto:mishabcp01@gmail.com',
+      color: 'from-cyan-400 to-blue-500'
+    },
+    {
+      icon: Phone,
+      label: 'Phone',
+      value: '+91 8848659419',
+      href: 'tel:+918848659419',
+      color: 'from-purple-400 to-pink-500'
+    }
+  ];
+
   return (
-    <section
-      id="Contact-Section"
-      ref={contactRef}
-      className={`container mx-auto px-4 sm:px-6 w-full sm:w-11/12 md:w-3/4 lg:w-1/2 mb-8 sm:mb-10 lg:mb-12 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-      } transition-all duration-1000 ease-in-out`}
-    >
-      <h2 className="text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 sm:mb-10 md:mb-12">Contact</h2>
-      <div className="flex flex-col gap-6">
-        {/* Social Links */}
-        <div className="flex flex-row flex-wrap justify-center gap-4 sm:gap-6 w-full">
-          <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg w-full sm:w-48 pt-3 pb-3 hover:shadow-md transition-all duration-300">
-            <a
-              href="https://github.com/mishabcp"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center hover:underline text-gray-800 text-sm sm:text-base"
-            >
-              <FaGithub className="w-8 h-8 sm:w-10 sm:h-10 text-blue-500 mr-2" />
-              GitHub
-            </a>
-          </div>
-          <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg w-full sm:w-48 pt-3 pb-3 hover:shadow-md transition-all duration-300">
-            <a href="tel:+918848659419" className="flex items-center justify-center hover:underline text-gray-800 text-sm sm:text-base">
-              <FaPhone className="w-8 h-8 sm:w-10 sm:h-10 text-blue-500 mr-2" />
-              Phone
-            </a>
-          </div>
-          <div className="flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg w-full sm:w-48 pt-3 pb-3 hover:shadow-md transition-all duration-300">
-            <a href="mailto:mishabcp01@gmail.com" className="flex items-center justify-center hover:underline text-gray-800 text-sm sm:text-base">
-              <FaEnvelope className="w-8 h-8 sm:w-10 sm:h-10 text-blue-500 mr-2" />
-              Email
-            </a>
-          </div>
-        </div>
+    <section ref={ref} id="Contact-Section" className="py-20">
+      <div className="container mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 neon-text">
+            Get In Touch
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Let's discuss your project ideas and how we can work together
+          </p>
+        </motion.div>
 
-        {/* Contact Form */}
-        <div className="flex flex-col items-center w-full bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-4 sm:p-6 md:p-8 hover:shadow-xl transition-all duration-300">
-          <form onSubmit={onSubmit} className="flex flex-col items-center w-full">
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              placeholder="Name"
-              className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-black text-sm sm:text-base"
-              required
-            />
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              placeholder="Email"
-              className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-black text-sm sm:text-base"
-              required
-            />
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleInputChange}
-              placeholder="Message"
-              rows="4"
-              className="input-field rounded-lg px-4 py-2 mb-4 w-full border border-gray-300 focus:border-blue-500 text-black text-sm sm:text-base"
-              required
-            ></textarea>
-            <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white shadow-md font-bold py-2 px-4 rounded-full mt-4 disabled:opacity-50 disabled:pointer-events-none text-sm sm:text-base"
-            >
-              Send Message
-            </button>
-          </form>
+        <div className="grid lg:grid-cols-2 gap-12">
+          {/* Contact Methods */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="space-y-6"
+          >
+            <h3 className="text-2xl font-bold text-white mb-8">Connect With Me</h3>
+            
+            {contactMethods.map((method, index) => (
+              <motion.a
+                key={index}
+                href={method.href}
+                target={method.href.startsWith('http') ? '_blank' : undefined}
+                rel={method.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                initial={{ opacity: 0, y: 20 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
+                whileHover={{ scale: 1.02, x: 10 }}
+                className="glass p-6 rounded-xl flex items-center space-x-4 hover:glow transition-all duration-300 group"
+              >
+                <div className={`p-3 bg-gradient-to-r ${method.color} rounded-lg group-hover:scale-110 transition-transform duration-300`}>
+                  <method.icon size={24} className="text-white" />
+                </div>
+                <div>
+                  <h4 className="text-white font-semibold text-lg">{method.label}</h4>
+                  <p className="text-gray-400">{method.value}</p>
+                </div>
+              </motion.a>
+            ))}
 
-          {popupMessage && (
-            <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50">
-              <div className="bg-white p-4 sm:p-6 rounded-xl shadow-2xl max-w-sm w-full">
-                <p className="text-base sm:text-lg text-black text-center">{popupMessage}</p>
-                <button
-                  onClick={() => setPopupMessage('')}
-                  className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-1 px-3 rounded-full text-sm sm:text-base"
-                >
-                  Close
-                </button>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="glass p-6 rounded-xl"
+            >
+              <h4 className="text-white font-semibold text-lg mb-3">Location</h4>
+              <p className="text-gray-400">Dubai, UAE</p>
+              <p className="text-gray-400 text-sm mt-2">Available for remote work worldwide</p>
+            </motion.div>
+          </motion.div>
+
+          {/* Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="glass p-8 rounded-2xl"
+          >
+            <h3 className="text-2xl font-bold text-white mb-8">Send a Message</h3>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="name" className="block text-gray-300 font-medium mb-2">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300"
+                  placeholder="Your full name"
+                />
               </div>
-            </div>
-          )}
+
+              <div>
+                <label htmlFor="email" className="block text-gray-300 font-medium mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300"
+                  placeholder="your.email@example.com"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-gray-300 font-medium mb-2">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={5}
+                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300 resize-none"
+                  placeholder="Tell me about your project..."
+                />
+              </div>
+
+              <motion.button
+                type="submit"
+                disabled={isSubmitting}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="w-full glass px-8 py-4 rounded-lg text-white font-semibold flex items-center justify-center space-x-2 hover:glow transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send size={20} />
+                    <span>Send Message</span>
+                  </>
+                )}
+              </motion.button>
+            </form>
+
+            {/* Status Messages */}
+            {/* The AnimatePresence import was removed, so this block is removed as well. */}
+            {submitStatus && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className={`mt-6 p-4 rounded-lg flex items-center space-x-3 ${
+                  submitStatus === 'success'
+                    ? 'bg-green-400/20 border border-green-400/30'
+                    : 'bg-red-400/20 border border-red-400/30'
+                }`}
+              >
+                {submitStatus === 'success' ? (
+                  <CheckCircle className="text-green-400 flex-shrink-0" size={20} />
+                ) : (
+                  <AlertCircle className="text-red-400 flex-shrink-0" size={20} />
+                )}
+                <span className={submitStatus === 'success' ? 'text-green-400' : 'text-red-400'}>
+                  {submitStatus === 'success'
+                    ? 'Message sent successfully! I\'ll get back to you soon.'
+                    : 'Failed to send message. Please try again.'}
+                </span>
+              </motion.div>
+            )}
+          </motion.div>
         </div>
       </div>
-      <hr className="w-full sm:w-4/5 mx-auto mb-8 sm:mb-10 mt-8 sm:mt-10 lg:mb-12 lg:mt-12" />
     </section>
   );
 };

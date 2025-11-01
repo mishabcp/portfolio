@@ -1,6 +1,5 @@
 // Home.jsx
 import React from 'react';
-import Particle from './assets/Particle.jsx'; // Changed from ../assets to ./assets
 import Header from './components/Header.jsx';
 import HeroSection from './components/HeroSection.jsx';
 import AboutSection from './components/AboutSection.jsx';
@@ -12,8 +11,7 @@ import Footer from './components/Footer.jsx';
 
 const Home = () => {
   return (
-    <div>
-      <Particle />
+    <div className="min-h-screen">
       <Header />
       <HeroSection />
       <AboutSection />

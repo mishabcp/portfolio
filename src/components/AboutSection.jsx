@@ -1,46 +1,48 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
 
 const AboutSection = () => {
-  const aboutRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const aboutSection = aboutRef.current;
-
-    const handleScroll = () => {
-      const top = aboutSection.getBoundingClientRect().top;
-      const windowHeight = window.innerHeight;
-
-      if (top < windowHeight * 0.75) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true
+  });
 
   return (
-    <section
-      ref={aboutRef}
-      id="about-section"
-      className={`w-4/5 2xl:w-3/5 mx-auto bg-white mb-10 lg:mb-20 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} transition-all duration-1000 ease-in-out`}
-    >
-      <div className="container mx-auto text-center">
-        <h2 className="text-4xl md:text-6xl font-bold mb-8 md:mb-12">About Me</h2>
-        <p className="text-md md:text-lg 2xl:text-xl mb-4 md:mb-8">
-          I'm a Full Stack Developer with 2 years of professional experience specializing in fintech and Enterprise Resource Planning (ERP) systems. Currently based in Dubai, I have a strong track record of building and maintaining complex web applications using PHP, Laravel, CodeIgniter, JavaScript, and MySQL. My expertise spans backend architecture, RESTful API development and integration, and database optimization.
-        </p>
-        <p className="text-md md:text-lg 2xl:text-xl mb-4 md:mb-8">
-          At Netplex IT Solutions, I've led API development for PlexPay, a UAE-based fintech recharge platform, and built ISL, a comprehensive Laboratory Information Management System. I'm passionate about creating scalable solutions, optimizing performance, and delivering quality software that meets real business needs. Beyond coding, I excel at client communication, technical documentation, and providing end-user training for production systems.
-        </p>
+    <section ref={ref} id="about-section" className="py-20">
+      <div className="container mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 neon-text">
+            About Me
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Passionate developer creating innovative solutions
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="max-w-4xl mx-auto"
+        >
+          <div className="grid md:grid-cols-1 gap-8">
+            <div className="glass p-8 rounded-2xl">
+              <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                I'm a Full Stack Developer with 2 years of professional experience specializing in fintech and Enterprise Resource Planning (ERP) systems. Currently based in Dubai, I have a strong track record of building and maintaining complex web applications using PHP, Laravel, CodeIgniter, JavaScript, and MySQL.
+              </p>
+              <p className="text-gray-300 text-lg leading-relaxed">
+                At Netplex IT Solutions, I've led API development for PlexPay, a UAE-based fintech recharge platform, and built ISL, a comprehensive Laboratory Information Management System. I'm passionate about creating scalable solutions, optimizing performance, and delivering quality software that meets real business needs. Beyond coding, I excel at client communication, technical documentation, and providing end-user training for production systems.
+              </p>
+            </div>
+          </div>
+        </motion.div>
       </div>
-      <hr className='w-4/5 mx-auto mb-10 mt-10 lg:mb-16 lg:mt-16'/>
     </section>
   );
 };

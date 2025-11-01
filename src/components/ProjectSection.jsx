@@ -1,182 +1,266 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { FaExternalLinkAlt, FaGithub } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { ExternalLink, Github, X, Code, Smartphone, Database } from 'lucide-react';
 
 const ProjectSection = () => {
-  const projectRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true
+  });
 
-  const handleLiveLinkClick1 = () => {
-    window.open('https://mishabcp.github.io/ToDoList/', '_blank');
-  };
+  const [selectedProject, setSelectedProject] = useState(null);
 
-  const handleGithubLinkClick1 = () => {
-    window.open('https://github.com/mishabcp/ToDoList', '_blank');
-  };
+  const projects = [
+    {
+      id: 1,
+      title: 'Task Organizer',
+      description: 'A comprehensive task management application built with React, featuring task creation, editing, deletion, and progress tracking with interactive charts.',
+      longDescription: 'Task Organizer is a React-based app for efficient task management. Users can add, edit, delete tasks, mark them as completed, and organize by category. It offers sorting and filtering options, visual progress tracking via pie charts, and a calendar view for managing tasks based on due dates.',
+      image: 'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/TO.png',
+      technologies: ['React', 'JavaScript', 'CSS', 'Chart.js'],
+      features: ['Task CRUD operations', 'Category organization', 'Progress visualization', 'Calendar integration'],
+      liveUrl: 'https://mishabcp.github.io/ToDoList/',
+      githubUrl: 'https://github.com/mishabcp/ToDoList',
+      icon: Code,
+      gradient: 'from-cyan-400 to-blue-500'
+    },
+    {
+      id: 2,
+      title: 'AlgoViz',
+      description: 'Interactive algorithm visualization tool demonstrating sorting and searching algorithms with real-time animations and custom data input.',
+      longDescription: 'AlgoViz is a React project designed to visually demonstrate fundamental sorting (Bubble, Merge, Quick) and searching (Linear, Binary) algorithms. Through interactive simulations, users can input custom arrays or use random data to observe these algorithms in action, gaining insights into their efficiency and functionality.',
+      image: 'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/sas.png',
+      technologies: ['React', 'JavaScript', 'CSS', 'Algorithms'],
+      features: ['Multiple algorithm visualizations', 'Custom data input', 'Real-time animations', 'Performance comparison'],
+      liveUrl: 'https://mishabcp.github.io/AlgoViz/',
+      githubUrl: 'https://github.com/mishabcp/AlgoViz',
+      icon: Code,
+      gradient: 'from-purple-400 to-pink-500'
+    },
+    {
+      id: 3,
+      title: 'Swift Eats',
+      description: 'Full-stack food delivery platform with secure user authentication, restaurant browsing, cart management, and order processing.',
+      longDescription: 'A full-stack web app for food delivery, featuring an intuitive front end with HTML, Tailwind CSS, and JavaScript. Backed by Java Servlets and JDBC for server-side logic and MySQL for data storage. Enables users to browse menus, place orders securely, and enjoy responsive design across devices.',
+      image: 'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/fda.png',
+      technologies: ['Java', 'Servlets', 'JDBC', 'MySQL', 'HTML', 'Tailwind CSS', 'JavaScript'],
+      features: ['User authentication', 'Restaurant browsing', 'Cart management', 'Order processing', 'Admin dashboard'],
+      githubUrl: 'https://github.com/mishabcp/FoodDeliveryApp',
+      icon: Smartphone,
+      gradient: 'from-green-400 to-cyan-500'
+    }
+  ];
 
-  const handleLiveLinkClick2 = () => {
-    window.open('https://mishabcp.github.io/AlgoViz/', '_blank');
-  };
-
-  const handleGithubLinkClick2 = () => {
-    window.open('https://github.com/mishabcp/AlgoViz', '_blank');
-  };
-
-  const handleGithubLinkClick3 = () => {
-    window.open('https://github.com/mishabcp/FoodDeliveryApp', '_blank');
-  };
-
-  useEffect(() => {
-    const projectSection = projectRef.current;
-
-    const handleScroll = () => {
-      const top = projectSection.getBoundingClientRect().top;
-      const windowHeight = window.innerHeight;
-
-      if (top < windowHeight * 0.75) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
       }
-    };
+    }
+  };
 
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
+  const cardVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6 }
+    }
+  };
 
   return (
-    <section
-      id="Project-Section"
-      ref={projectRef}
-      className={`container w-4/5 2xl:w-3/5 bg-white mx-auto mb-10 lg:mb-20 ${
-        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-      } transition-all duration-1000 ease-in-out`}
-    >
-      <h2 className="text-center text-4xl md:text-6xl font-bold mb-12 md:mb-16">Projects</h2>
+    <section ref={ref} id="Project-Section" className="py-20">
+      <div className="container mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl md:text-6xl font-bold mb-6 neon-text">
+            Featured Projects
+          </h2>
+          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+            Showcasing my work and technical expertise
+          </p>
+        </motion.div>
 
-      <div className="space-y-6">
-        {/* Project 1 */}
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-6 md:p-8 hover:shadow-xl transition-all duration-300">
-          <div className="md:flex gap-6">
-            <div className="flex w-full md:w-1/2 items-center justify-center mb-6 md:mb-0">
-              <div className="w-full xl:w-4/5">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={inView ? "visible" : "hidden"}
+          className="grid lg:grid-cols-3 gap-8 mb-12"
+        >
+          {projects.map((project) => (
+            <motion.div
+              key={project.id}
+              variants={cardVariants}
+              whileHover={{ y: -10 }}
+              className="glass rounded-2xl overflow-hidden hover:glow transition-all duration-300 cursor-pointer"
+              onClick={() => setSelectedProject(project)}
+            >
+              <div className="relative">
                 <img
-                  src="https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/TO.png"
-                  alt="Task Organizer"
-                  className="w-full h-auto rounded-lg mb-4"
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-48 object-cover"
                 />
-                <div className="flex justify-center gap-4">
-                  <button
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full flex items-center"
-                    onClick={handleLiveLinkClick1}
-                  >
-                    <FaExternalLinkAlt className="mr-2" />
-                    Live
-                  </button>
-                  <button
-                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full flex items-center"
-                    onClick={handleGithubLinkClick1}
-                  >
-                    <FaGithub className="mr-2" />
-                    GitHub
-                  </button>
+                <div className={`absolute top-4 right-4 p-2 bg-gradient-to-r ${project.gradient} rounded-lg`}>
+                  <project.icon size={20} className="text-white" />
                 </div>
               </div>
-            </div>
-            <div className="flex flex-col w-full md:w-1/2 justify-center">
-              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">Task Organizer</h3>
-              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                Task Organizer is a React-based app for <span className="text-blue-500">efficient task management</span>. Users can{' '}
-                <span className="text-blue-500">add, edit, delete tasks</span>, <span className="text-blue-500">mark them as completed</span>, and{' '}
-                <span className="text-blue-500">organize by category</span>. It offers <span className="text-blue-500">sorting and filtering options</span>,{' '}
-                <span className="text-blue-500">visual progress tracking via pie charts</span>, and a{' '}
-                <span className="text-blue-500">calendar view</span> for managing tasks based on <span className="text-blue-500">due dates</span>.
-              </p>
-            </div>
-          </div>
-        </div>
 
-        {/* Project 2 */}
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-6 md:p-8 hover:shadow-xl transition-all duration-300">
-          <div className="md:flex gap-6">
-            <div className="flex flex-col w-full md:w-1/2 justify-center">
-              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">AlgoViz</h3>
-              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                AlgoViz is a React project designed to visually demonstrate fundamental sorting (Bubble, Merge, Quick) and searching (Linear, Binary)
-                algorithms. Through interactive simulations, users can input custom arrays or use random data to observe these algorithms in action,
-                gaining insights into their efficiency and functionality.
-              </p>
-            </div>
-            <div className="flex w-full md:w-1/2 items-center justify-center mt-6 md:mt-0">
-              <div className="w-full xl:w-4/5">
-                <img
-                  src="https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/sas.png"
-                  alt="AlgoViz"
-                  className="w-full h-auto rounded-lg mb-4"
-                />
-                <div className="flex justify-center gap-4">
-                  <button
-                    className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full flex items-center"
-                    onClick={handleLiveLinkClick2}
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-white mb-3">{project.title}</h3>
+                <p className="text-gray-300 text-sm leading-relaxed mb-4 line-clamp-3">
+                  {project.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.technologies.slice(0, 3).map((tech, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 bg-cyan-400/20 text-cyan-400 text-xs rounded-full"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                  {project.technologies.length > 3 && (
+                    <span className="px-3 py-1 bg-gray-600 text-gray-300 text-xs rounded-full">
+                      +{project.technologies.length - 3} more
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex space-x-3">
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center space-x-2 text-cyan-400 hover:text-cyan-300 transition-colors"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <ExternalLink size={16} />
+                      <span className="text-sm font-medium">Live</span>
+                    </a>
+                  )}
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-2 text-gray-400 hover:text-white transition-colors"
+                    onClick={(e) => e.stopPropagation()}
                   >
-                    <FaExternalLinkAlt className="mr-2" />
-                    Live
-                  </button>
-                  <button
-                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full flex items-center"
-                    onClick={handleGithubLinkClick2}
-                  >
-                    <FaGithub className="mr-2" />
-                    GitHub
-                  </button>
+                    <Github size={16} />
+                    <span className="text-sm font-medium">Code</span>
+                  </a>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Project 3 */}
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-xl p-6 md:p-8 hover:shadow-xl transition-all duration-300">
-          <div className="md:flex gap-6">
-            <div className="flex w-full md:w-1/2 items-center justify-center mb-6 md:mb-0">
-              <div className="w-full xl:w-4/5">
-                <img
-                  src="https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/fda.png"
-                  alt="Swift Eats"
-                  className="w-full h-auto rounded-lg mb-4"
-                />
-                <div className="flex justify-center gap-4">
-                  <Link to="/new-page">
-                    <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full flex items-center">
-                      <FaExternalLinkAlt className="mr-2" />
-                      Live
-                    </button>
-                  </Link>
-                  <button
-                    className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full flex items-center"
-                    onClick={handleGithubLinkClick3}
-                  >
-                    <FaGithub className="mr-2" />
-                    GitHub
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div className="flex flex-col w-full md:w-1/2 justify-center">
-              <h3 className="text-xl md:text-2xl font-bold text-gray-800 mb-4">Swift Eats</h3>
-              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                A full-stack web app for food delivery, featuring an intuitive front end with HTML, Tailwind CSS, and JavaScript. Backed by Java Servlets
-                and JDBC for server-side logic and MySQL for data storage. Enables users to browse menus, place orders securely, and enjoy responsive design
-                across devices.
-              </p>
-            </div>
-          </div>
-        </div>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
-      <hr className="w-4/5 mx-auto mb-10 mt-10 lg:mb-16 lg:mt-16" />
+
+      {/* Project Modal */}
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedProject(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="glass rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6 md:p-8">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-2xl md:text-3xl font-bold text-white">{selectedProject.title}</h3>
+                  <button
+                    onClick={() => setSelectedProject(null)}
+                    className="text-gray-400 hover:text-white transition-colors"
+                  >
+                    <X size={24} />
+                  </button>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <img
+                      src={selectedProject.image}
+                      alt={selectedProject.title}
+                      className="w-full rounded-xl mb-6"
+                    />
+                    <div className="flex space-x-4">
+                      {selectedProject.liveUrl && (
+                        <a
+                          href={selectedProject.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center space-x-2 glass px-4 py-2 rounded-lg text-cyan-400 hover:text-cyan-300 transition-colors"
+                        >
+                          <ExternalLink size={16} />
+                          <span>View Live</span>
+                        </a>
+                      )}
+                      <a
+                        href={selectedProject.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center space-x-2 glass px-4 py-2 rounded-lg text-gray-300 hover:text-white transition-colors"
+                      >
+                        <Github size={16} />
+                        <span>View Code</span>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-gray-300 leading-relaxed mb-6">
+                      {selectedProject.longDescription}
+                    </p>
+
+                    <div className="mb-6">
+                      <h4 className="text-white font-semibold mb-3">Technologies Used</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedProject.technologies.map((tech, index) => (
+                          <span
+                            key={index}
+                            className="px-3 py-1 bg-gradient-to-r from-cyan-400/20 to-purple-500/20 text-cyan-400 rounded-full text-sm"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="text-white font-semibold mb-3">Key Features</h4>
+                      <ul className="space-y-2">
+                        {selectedProject.features.map((feature, index) => (
+                          <li key={index} className="flex items-center space-x-2 text-gray-300">
+                            <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full"></div>
+                            <span>{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };
