@@ -77,8 +77,8 @@ const ContactSection = () => {
     {
       icon: Phone,
       label: 'Phone',
-      value: '+91 8848659419',
-      href: 'tel:+918848659419',
+      value: '971-554-531-717',
+      href: 'tel:+971554531717',
       color: 'from-purple-400 to-pink-500'
     }
   ];
