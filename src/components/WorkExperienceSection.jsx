@@ -149,7 +149,7 @@ const WorkExperienceSection = () => {
               {[
                 { year: '2024', title: 'Full Stack Developer', company: 'Netplex IT Solutions', status: 'current' },
                 { year: '2023', title: 'Started Professional Journey', company: 'Self-Learning & Projects', status: 'past' },
-                { year: '2022', title: 'B.Tech Computer Science', company: 'Graduation', status: 'past' }
+                { year: '2023', title: 'B.Tech Computer Science', company: 'Graduation', status: 'past' }
               ].map((milestone, index) => (
                 <motion.div
                   key={index}
