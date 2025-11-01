@@ -137,34 +137,55 @@ const Header = () => {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div
-            initial="closed"
-            animate="open"
-            exit="closed"
-            variants={menuVariants}
-            className="md:hidden absolute top-full left-4 right-4 mt-2 glass rounded-2xl overflow-hidden"
-          >
-            <nav className="p-6 space-y-4">
-              {[
-                { id: 'hero-section', label: 'Home' },
-                { id: 'about-section', label: 'About' },
-                { id: 'experience-section', label: 'Experience' },
-                { id: 'skills-section', label: 'Skills' },
-                { id: 'Project-Section', label: 'Projects' },
-                { id: 'Contact-Section', label: 'Contact' }
-              ].map((item) => (
-                <motion.a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  onClick={(e) => handleClick(item.id, e)}
-                  className="block py-3 px-4 text-gray-300 hover:text-cyan-400 transition-colors rounded-lg hover:bg-white/5"
-                  whileHover={{ x: 10 }}
-                >
-                  {item.label}
-                </motion.a>
-              ))}
-            </nav>
-          </motion.div>
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="md:hidden fixed inset-0 z-40"
+              onClick={() => setIsMenuOpen(false)}
+              style={{
+                backgroundColor: 'rgba(0, 0, 0, 0.85)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0
+              }}
+            />
+            <motion.div
+              initial="closed"
+              animate="open"
+              exit="closed"
+              variants={menuVariants}
+              className="md:hidden absolute top-full left-4 right-4 mt-2 glass rounded-2xl overflow-hidden border border-white/10 shadow-2xl z-50"
+              style={{ position: 'relative', zIndex: 50 }}
+            >
+              <nav className="p-6 space-y-4">
+                {[
+                  { id: 'hero-section', label: 'Home' },
+                  { id: 'about-section', label: 'About' },
+                  { id: 'experience-section', label: 'Experience' },
+                  { id: 'skills-section', label: 'Skills' },
+                  { id: 'Project-Section', label: 'Projects' },
+                  { id: 'Contact-Section', label: 'Contact' }
+                ].map((item) => (
+                  <motion.a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    onClick={(e) => handleClick(item.id, e)}
+                    className="block py-3 px-4 text-gray-300 hover:text-cyan-400 transition-colors rounded-lg hover:bg-white/5"
+                    whileHover={{ x: 10 }}
+                  >
+                    {item.label}
+                  </motion.a>
+                ))}
+              </nav>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </motion.header>

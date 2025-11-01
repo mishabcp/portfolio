@@ -85,8 +85,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section ref={ref} id="hero-section" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Animated Background */}
+    <section ref={ref} id="hero-section" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 md:pt-0">      {/* Animated Background */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
