@@ -14,14 +14,14 @@ const ProjectSection = () => {
   const projects = [
     {
       id: 1,
-      title: 'Task Organizer',
-      description: 'A comprehensive task management application built with React, featuring task creation, editing, deletion, and progress tracking with interactive charts.',
-      longDescription: 'Task Organizer is a React-based app for efficient task management. Users can add, edit, delete tasks, mark them as completed, and organize by category. It offers sorting and filtering options, visual progress tracking via pie charts, and a calendar view for managing tasks based on due dates.',
+      title: 'TaskNova',
+      description: 'A futuristic task manager built with React featuring advanced creation, editing, deletion, and multi-view productivity tools.',
+      longDescription: 'TaskNova is a Vite-powered React app with a sci-fi UI for efficient task handling. Users can add, edit, delete tasks, assign priorities, tags, and categories, track progress with stats, use Kanban drag-and-drop, calendar scheduling, streak tracking, focus mode, and mobile-optimized interactions.',
       image: 'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/TO.png',
-      technologies: ['React', 'JavaScript', 'CSS', 'Chart.js'],
-      features: ['Task CRUD operations', 'Category organization', 'Progress visualization', 'Calendar integration'],
-      liveUrl: 'https://mishabcp.github.io/ToDoList/',
-      githubUrl: 'https://github.com/mishabcp/ToDoList',
+      technologies: ['React', 'Vite', 'Zustand', 'Tailwind', 'Framer Motion'],
+      features: ['Advanced task tools', 'Kanban board', 'Calendar view', 'Focus mode'],
+      liveUrl: 'https://mishabcp.github.io/TaskNova/',
+      githubUrl: 'https://github.com/mishabcp/TaskNova',
       icon: Code,
       gradient: 'from-cyan-400 to-blue-500'
     },
