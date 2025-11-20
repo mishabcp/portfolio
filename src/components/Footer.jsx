@@ -53,9 +53,6 @@ const Footer = () => {
               </div>
               <span className="text-white font-bold text-xl neon-text">Mishab CP</span>
             </div>
-            <p className="text-gray-400 text-sm">
-              &copy; 2025 Mishab CP. All rights reserved.
-            </p>
           </motion.div>
 
           {/* Navigation Links */}
@@ -127,13 +124,7 @@ const Footer = () => {
         >
           <p className="text-gray-400 text-sm flex items-center justify-center space-x-2">
             <span>Made with</span>
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <Heart className="text-red-400" size={16} fill="currentColor" />
-            </motion.div>
-            <span>using React & Tailwind CSS</span>
+            <span>React & Tailwind CSS</span>
           </p>
         </motion.div>
       </div>
