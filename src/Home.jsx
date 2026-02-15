@@ -185,26 +185,32 @@ const Home = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <ProjectCard 
               title="PlexPay Platform" 
-              desc="A comprehensive fintech solution for the UAE market, handling secure transactions, third-party integrations, and real-time reporting."
+              desc="Led API development for UAE-based fintech recharge platform with secure transactions and third-party provider integrations."
               tags={['React', 'Node.js', 'MongoDB', 'Docker']}
               highlight={false}
             />
             <ProjectCard 
               title="ISL Management" 
-              desc="Laboratory Information Management System built for scalability. Features automated reporting, patient tracking, and secure data handling."
+              desc="Built comprehensive LIMS using Laravel with optimized database design and backend architecture."
               tags={['Laravel', 'MySQL', 'Vue.js', 'Redis']}
               highlight={true}
             />
             <ProjectCard 
               title="TaskNova" 
-              desc="Advanced project management tool with real-time collaboration features, drag-and-drop interfaces, and team analytics."
-              tags={['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL']}
+              desc="A futuristic task manager built with React featuring advanced creation, editing, deletion, and multi-view productivity tools."
+              tags={['React', 'Vite', 'Zustand', 'Tailwind']}
               highlight={false}
             />
             <ProjectCard 
               title="AlgoViz" 
-              desc="Interactive algorithm visualizer for educational purposes. Demonstrates complex sorting and pathfinding algorithms in real-time."
-              tags={['React', 'D3.js', 'Framer Motion']}
+              desc="Interactive algorithm visualization tool demonstrating sorting and searching algorithms with real-time animations."
+              tags={['React', 'JavaScript', 'CSS', 'Algorithms']}
+              highlight={false}
+            />
+             <ProjectCard 
+              title="Swift Eats" 
+              desc="Full-stack food delivery platform with secure user authentication, restaurant browsing, cart management, and order processing."
+              tags={['Java', 'Servlets', 'JDBC', 'MySQL', 'Tailwind CSS']}
               highlight={false}
             />
           </div>
