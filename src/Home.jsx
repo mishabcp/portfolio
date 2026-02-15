@@ -78,7 +78,7 @@ const NavBar = () => (
           </a>
         ))}
       </div>
-      <a href={resumePdf} download="Mishab_CP_Resume.pdf" className="text-[#FF4D4D] text-sm font-medium hover:text-[#ff8080] transition-colors">
+      <a href="/resume.pdf" download="Mishab_CP_Resume.pdf" className="text-[#FF4D4D] text-sm font-medium hover:text-[#ff8080] transition-colors">
         Resume
       </a>
     </div>
