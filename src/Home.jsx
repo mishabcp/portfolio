@@ -84,7 +84,7 @@ const NavBar = () => (
   </nav>
 );
 
-const ProjectCard = ({ title, desc, tags, highlight }) => (
+const ProjectCard = ({ title, desc, tags, highlight, github, demo }) => (
   <motion.div 
     whileHover={{ y: -5 }}
     className={`p-8 rounded-2xl border ${highlight ? 'border-[#FF4D4D]/50 bg-[#FF4D4D]/5' : 'border-white/10 bg-[#121212]'} transition-colors group`}
@@ -101,12 +101,16 @@ const ProjectCard = ({ title, desc, tags, highlight }) => (
       ))}
     </div>
     <div className="flex items-center gap-4 text-sm font-medium">
-      <a href="#" className="flex items-center gap-2 text-white hover:text-[#FF4D4D] transition-colors">
-        <Github size={16} /> Code
-      </a>
-      <a href="#" className="flex items-center gap-2 text-white hover:text-[#FF4D4D] transition-colors">
-        <ExternalLink size={16} /> Live Demo
-      </a>
+      {github && (
+        <a href={github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-white hover:text-[#FF4D4D] transition-colors">
+          <Github size={16} /> Code
+        </a>
+      )}
+      {demo && (
+        <a href={demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-white hover:text-[#FF4D4D] transition-colors">
+          <ExternalLink size={16} /> Live Demo
+        </a>
+      )}
     </div>
   </motion.div>
 );
@@ -138,13 +142,179 @@ const ExperienceItem = ({ role, company, period, desc, skills }) => (
   </div>
 );
 
+const SkillsSection = () => {
+  const skills = [
+    {
+      category: "Languages",
+      items: ['PHP', 'JavaScript', 'Java', 'SQL']
+    },
+    {
+      category: "Frameworks",
+      items: ['Laravel', 'CodeIgniter', 'React', 'jQuery', 'Bootstrap', 'Tailwind CSS']
+    },
+    {
+      category: "API & Database",
+      items: ['REST API', 'API Integration', 'MySQL', 'Database Design', 'Query Optimization', 'Postman']
+    },
+    {
+      category: "Tools & Deployment",
+      items: ['Git', 'cPanel', 'phpMyAdmin', 'Web3Forms', 'VS Code']
+    }
+  ];
+
+  return (
+    <section id="skills" className="relative z-10 py-32 px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-20">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Skills<span className="text-[#FF4D4D]">.</span></h2>
+          <p className="text-gray-400">Technologies I work with</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {skills.map((skillGroup, index) => (
+            <div key={index} className="bg-[#121212] border border-white/10 p-8 rounded-2xl hover:border-[#FF4D4D]/50 transition-colors">
+              <h3 className="text-xl font-bold text-white mb-6 border-b border-white/10 pb-4">
+                {skillGroup.category}
+              </h3>
+              <div className="flex flex-wrap gap-2">
+                {skillGroup.items.map((skill, i) => (
+                  <span key={i} className="px-3 py-1 bg-white/5 text-gray-300 text-sm rounded-full border border-white/5">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const ContactSection = () => {
+  const [formData, setFormData] = React.useState({
+    name: '',
+    email: '',
+    message: ''
+  });
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [submitStatus, setSubmitStatus] = React.useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    const formDataToSend = new FormData();
+    formDataToSend.append('access_key', 'b118b50d-7294-45cd-9a5e-0b80604cea25');
+    formDataToSend.append('name', formData.name);
+    formDataToSend.append('email', formData.email);
+    formDataToSend.append('message', formData.message);
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataToSend
+      });
+      const data = await response.json();
+      if (data.success) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+      setTimeout(() => setSubmitStatus(null), 3000);
+    }
+  };
+
+  return (
+    <section id="contact" className="relative z-10 py-32 px-6 bg-gradient-to-t from-[#0a0a0a] to-transparent">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Get In Touch<span className="text-[#FF4D4D]">.</span></h2>
+          <p className="text-gray-400">Let's discuss your project ideas</p>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-12">
+          <div className="space-y-8">
+            <div className="bg-[#121212] p-8 rounded-2xl border border-white/10">
+              <h3 className="text-xl font-bold text-white mb-6">Contact Info</h3>
+              <div className="space-y-4">
+                <a href="mailto:mishabcp01@gmail.com" className="flex items-center gap-4 text-gray-400 hover:text-[#FF4D4D] transition-colors">
+                  <Mail size={20} /> mishabcp01@gmail.com
+                </a>
+                <a href="tel:+971554531717" className="flex items-center gap-4 text-gray-400 hover:text-[#FF4D4D] transition-colors">
+                  <ExternalLink size={20} /> +971-554-531-717
+                </a>
+                <div className="flex items-center gap-4 text-gray-400">
+                  <div className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center">
+                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                  </div>
+                  <span>Available for new projects</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <input
+                type="text"
+                placeholder="Name"
+                required
+                value={formData.name}
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                className="w-full bg-[#121212] border border-white/10 rounded-xl px-6 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#FF4D4D] transition-colors"
+              />
+            </div>
+            <div>
+              <input
+                type="email"
+                placeholder="Email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                className="w-full bg-[#121212] border border-white/10 rounded-xl px-6 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#FF4D4D] transition-colors"
+              />
+            </div>
+            <div>
+              <textarea
+                placeholder="Message"
+                required
+                rows="4"
+                value={formData.message}
+                onChange={(e) => setFormData({...formData, message: e.target.value})}
+                className="w-full bg-[#121212] border border-white/10 rounded-xl px-6 py-4 text-white placeholder-gray-600 focus:outline-none focus:border-[#FF4D4D] transition-colors resize-none"
+              ></textarea>
+            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="w-full bg-[#FF4D4D] hover:bg-[#ff3333] text-white font-bold py-4 rounded-xl transition-all shadow-[0_0_20px_rgba(255,77,77,0.2)] hover:shadow-[0_0_30px_rgba(255,77,77,0.4)] disabled:opacity-50"
+            >
+              {isSubmitting ? 'Sending...' : 'Send Message'}
+            </button>
+            {submitStatus === 'success' && (
+              <p className="text-green-500 text-center">Message sent successfully!</p>
+            )}
+            {submitStatus === 'error' && (
+              <p className="text-red-500 text-center">Failed to send message.</p>
+            )}
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const Home = () => {
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-[#FF4D4D] selection:text-white">
       <StarBackground />
       <NavBar />
-
-      {/* Hero Section */}
       <section id="home" className="relative z-10 min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -173,8 +343,22 @@ const Home = () => {
           </div>
         </motion.div>
       </section>
-
-      {/* Projects Section */}
+      <section id="about" className="relative z-10 py-20 px-6 bg-[#0a0a0a]">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-[#121212] border border-white/10 p-10 rounded-2xl">
+            <h2 className="text-3xl font-bold mb-6">About Me<span className="text-[#FF4D4D]">.</span></h2>
+            <div className="space-y-6 text-gray-400 leading-relaxed text-lg">
+              <p>
+                I'm a Full Stack Developer with 2 years of professional experience specializing in fintech and Enterprise Resource Planning (ERP) systems. Currently based in Dubai, I have a strong track record of building and maintaining complex web applications using PHP, Laravel, CodeIgniter, JavaScript, and MySQL.
+              </p>
+              <p>
+                At Netplex IT Solutions, I've led API development for PlexPay, a UAE-based fintech recharge platform, and built ISL, a comprehensive Laboratory Information Management System. I'm passionate about creating scalable solutions, optimizing performance, and delivering quality software that meets real business needs.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <SkillsSection />
       <section id="projects" className="relative z-10 py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
@@ -200,24 +384,27 @@ const Home = () => {
               desc="A futuristic task manager built with React featuring advanced creation, editing, deletion, and multi-view productivity tools."
               tags={['React', 'Vite', 'Zustand', 'Tailwind']}
               highlight={false}
+              github="https://github.com/mishabcp/TaskNova"
+              demo="https://mishabcp.github.io/TaskNova/"
             />
             <ProjectCard 
               title="AlgoViz" 
               desc="Interactive algorithm visualization tool demonstrating sorting and searching algorithms with real-time animations."
               tags={['React', 'JavaScript', 'CSS', 'Algorithms']}
               highlight={false}
+              github="https://github.com/mishabcp/AlgoViz"
+              demo="https://mishabcp.github.io/AlgoViz/"
             />
              <ProjectCard 
               title="Swift Eats" 
               desc="Full-stack food delivery platform with secure user authentication, restaurant browsing, cart management, and order processing."
               tags={['Java', 'Servlets', 'JDBC', 'MySQL', 'Tailwind CSS']}
               highlight={false}
+              github="https://github.com/mishabcp/FoodDeliveryApp"
             />
           </div>
         </div>
       </section>
-
-      {/* Experience Section */}
       <section id="experience" className="relative z-10 py-32 px-6 bg-gradient-to-b from-transparent to-[#0a0a0a]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-20">
@@ -251,8 +438,7 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
+      <ContactSection />
       <footer className="relative z-10 py-12 text-center border-t border-white/10 text-gray-500 text-sm">
         <p>© 2024 Mishab CP. Crafted with code.</p>
       </footer>
