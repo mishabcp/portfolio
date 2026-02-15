@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Github, Linkedin, Mail, ExternalLink, ArrowRight } from 'lucide-react';
 
 const StarBackground = () => {
@@ -138,7 +138,7 @@ const ExperienceItem = ({ role, company, period, desc, skills }) => (
   </div>
 );
 
-const Home = () => {
+const AbhayInspiredPreview = () => {
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans selection:bg-[#FF4D4D] selection:text-white">
       <StarBackground />
@@ -254,4 +254,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default AbhayInspiredPreview;
