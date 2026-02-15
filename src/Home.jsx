@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, ExternalLink, ArrowRight } from 'lucide-react';
 
-const StarBackground = () => {
-  const canvasRef = useRef(null);
+const StarBackground = () => {  const canvasRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
