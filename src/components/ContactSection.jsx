@@ -1,258 +1,224 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { Github, Mail, Phone, Send, CheckCircle, AlertCircle } from 'lucide-react';
+import { HiMail, HiPhone, HiLocationMarker } from 'react-icons/hi';
+import { FaLinkedin, FaGithub, FaWhatsapp } from 'react-icons/fa';
+import { resumeData } from '../data/resumeData';
 
-const ContactSection = () => {
-  const { ref, inView } = useInView({
-    threshold: 0.1,
-    triggerOnce: true
-  });
+const ACCENT = '#4db8a4';
+const ACCENT_DIM = 'rgba(77, 184, 164, 0.3)';
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState(null);
+// Replace with your Web3Forms access key: https://web3forms.com
+const WEB3FORMS_ACCESS_KEY = 'b118b50d-7294-45cd-9a5e-0b80604cea25';
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+export default function ContactSection() {
+  const [formState, setFormState] = useState({ status: null, message: '' });
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitStatus(null);
-
-    const formDataToSend = new FormData();
-    formDataToSend.append('access_key', 'b118b50d-7294-45cd-9a5e-0b80604cea25');
-    formDataToSend.append('name', formData.name);
-    formDataToSend.append('email', formData.email);
-    formDataToSend.append('message', formData.message);
+    setLoading(true);
+    setFormState({ status: null, message: '' });
+    const form = e.target;
+    const formData = new FormData(form);
+    formData.append('access_key', WEB3FORMS_ACCESS_KEY);
 
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        body: formDataToSend
+        body: formData,
       });
-
-      const data = await response.json();
-
+      const data = await res.json();
       if (data.success) {
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', message: '' });
-        setTimeout(() => setSubmitStatus(null), 3000);
+        setFormState({ status: 'success', message: 'Thanks! I\'ll get back to you soon.' });
+        form.reset();
       } else {
-        setSubmitStatus('error');
+        setFormState({ status: 'error', message: data.message || 'Something went wrong.' });
       }
-    } catch (error) {
-      console.error('Error submitting form:', error);
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
+    } catch (err) {
+      setFormState({ status: 'error', message: 'Failed to send. Please email me directly.' });
     }
+    setLoading(false);
   };
 
-  const contactMethods = [
-    {
-      icon: Github,
-      label: 'GitHub',
-      value: 'mishabcp',
-      href: 'https://github.com/mishabcp',
-      color: 'from-gray-400 to-gray-600'
-    },
-    {
-      icon: Mail,
-      label: 'Email',
-      value: 'mishabcp01@gmail.com',
-      href: 'mailto:mishabcp01@gmail.com',
-      color: 'from-cyan-400 to-blue-500'
-    },
-    {
-      icon: Phone,
-      label: 'Phone',
-      value: '971-554-531-717',
-      href: 'tel:+971554531717',
-      color: 'from-purple-400 to-pink-500'
-    }
+  const links = [
+    { label: 'Email', href: `mailto:${resumeData.email}`, icon: HiMail, value: resumeData.email },
+    { label: 'Phone', href: `tel:${resumeData.phone}`, icon: HiPhone, value: resumeData.phone },
+    { label: 'Location', href: '#', icon: HiLocationMarker, value: resumeData.location },
+  ];
+
+  const social = [
+    { label: 'LinkedIn', href: resumeData.linkedin, icon: FaLinkedin },
+    { label: 'GitHub', href: resumeData.github, icon: FaGithub },
+    { label: 'WhatsApp', href: resumeData.whatsapp, icon: FaWhatsapp },
   ];
 
   return (
-    <section ref={ref} id="Contact-Section" className="py-20">
-      <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 neon-text">
-            Get In Touch
-          </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Let's discuss your project ideas and how we can work together
-          </p>
-        </motion.div>
+    <motion.section
+      id="contact"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-60px' }}
+      variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+      style={{
+        padding: '5rem 2rem 7rem',
+        textAlign: 'center',
+      }}
+    >
+      <motion.span
+        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+        style={{
+          display: 'block',
+          marginBottom: '1.5rem',
+          fontSize: '0.6rem',
+          letterSpacing: '0.35em',
+          textTransform: 'uppercase',
+          color: ACCENT_DIM,
+          fontWeight: 500,
+        }}
+      >
+        Contact
+      </motion.span>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Methods */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="space-y-6"
+      <motion.h2
+        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+        style={{
+          fontFamily: "'Cormorant Garamond', serif",
+          fontSize: 'clamp(3rem, 7vw, 5.5rem)',
+          fontWeight: 300,
+          margin: '0 0 1rem',
+          color: ACCENT,
+          fontStyle: 'italic',
+        }}
+      >
+        Let's Connect
+      </motion.h2>
+      <motion.div
+        variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
+        style={{ width: 40, height: 1, background: ACCENT, margin: '0 auto 2.5rem' }}
+      />
+
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '2.5rem', flexWrap: 'wrap', marginBottom: '3rem' }}>
+        {links.map((item) => (
+          <motion.a
+            key={item.label}
+            href={item.href}
+            variants={{ hidden: { opacity: 0, y: 15 }, visible: { opacity: 1, y: 0 } }}
+            style={{ color: '#b8b4a8', textDecoration: 'none', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}
           >
-            <h3 className="text-2xl font-bold text-white mb-8">Connect With Me</h3>
-            
-            {contactMethods.map((method, index) => (
-              <motion.a
-                key={index}
-                href={method.href}
-                target={method.href.startsWith('http') ? '_blank' : undefined}
-                rel={method.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.3 + index * 0.1 }}
-                whileHover={{ scale: 1.02, x: 10 }}
-                className="glass p-6 rounded-xl flex items-center space-x-4 hover:glow transition-all duration-300 group"
-              >
-                <div className={`p-3 bg-gradient-to-r ${method.color} rounded-lg group-hover:scale-110 transition-transform duration-300`}>
-                  <method.icon size={24} className="text-white" />
-                </div>
-                <div>
-                  <h4 className="text-white font-semibold text-lg">{method.label}</h4>
-                  <p className="text-gray-400">{method.value}</p>
-                </div>
-              </motion.a>
-            ))}
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="glass p-6 rounded-xl"
-            >
-              <h4 className="text-white font-semibold text-lg mb-3">Location</h4>
-              <p className="text-gray-400">Dubai, UAE</p>
-              <p className="text-gray-400 text-sm mt-2">Available for remote work worldwide</p>
-            </motion.div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="glass p-8 rounded-2xl"
-          >
-            <h3 className="text-2xl font-bold text-white mb-8">Send a Message</h3>
-
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-gray-300 font-medium mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300"
-                  placeholder="Your full name"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="email" className="block text-gray-300 font-medium mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  required
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="block text-gray-300 font-medium mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  required
-                  rows={5}
-                  className="w-full px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300 resize-none"
-                  placeholder="Tell me about your project..."
-                />
-              </div>
-
-              <motion.button
-                type="submit"
-                disabled={isSubmitting}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full glass px-8 py-4 rounded-lg text-white font-semibold flex items-center justify-center space-x-2 hover:glow transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin"></div>
-                    <span>Sending...</span>
-                  </>
-                ) : (
-                  <>
-                    <Send size={20} />
-                    <span>Send Message</span>
-                  </>
-                )}
-              </motion.button>
-            </form>
-
-            {/* Status Messages */}
-            {/* The AnimatePresence import was removed, so this block is removed as well. */}
-            {submitStatus && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className={`mt-6 p-4 rounded-lg flex items-center space-x-3 ${
-                  submitStatus === 'success'
-                    ? 'bg-green-400/20 border border-green-400/30'
-                    : 'bg-red-400/20 border border-red-400/30'
-                }`}
-              >
-                {submitStatus === 'success' ? (
-                  <CheckCircle className="text-green-400 flex-shrink-0" size={20} />
-                ) : (
-                  <AlertCircle className="text-red-400 flex-shrink-0" size={20} />
-                )}
-                <span className={submitStatus === 'success' ? 'text-green-400' : 'text-red-400'}>
-                  {submitStatus === 'success'
-                    ? 'Message sent successfully! I\'ll get back to you soon.'
-                    : 'Failed to send message. Please try again.'}
-                </span>
-              </motion.div>
-            )}
-          </motion.div>
-        </div>
+            <item.icon size={22} style={{ color: ACCENT_DIM }} />
+            <span style={{ fontSize: '0.6rem', letterSpacing: '0.2em', color: ACCENT_DIM, textTransform: 'uppercase' }}>{item.label}</span>
+            <span style={{ fontSize: '0.85rem' }}>{item.value}</span>
+          </motion.a>
+        ))}
       </div>
-    </section>
-  );
-};
 
-export default ContactSection;
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', marginBottom: '2.5rem' }}>
+        {social.map((item) => (
+          <motion.a
+            key={item.label}
+            href={item.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            variants={{ hidden: { opacity: 0, scale: 0.9 }, visible: { opacity: 1, scale: 1 } }}
+            style={{
+              padding: '12px 20px',
+              border: `1px solid ${ACCENT_DIM}`,
+              color: ACCENT,
+              borderRadius: '4px',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              fontSize: '0.85rem',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = ACCENT_DIM; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+          >
+            <item.icon size={20} /> {item.label}
+          </motion.a>
+        ))}
+      </div>
+
+      <motion.form
+        variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
+        onSubmit={handleSubmit}
+        style={{
+          maxWidth: '480px',
+          margin: '0 auto',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          textAlign: 'left',
+        }}
+      >
+        <input
+          type="text"
+          name="name"
+          placeholder="Your name"
+          required
+          style={{
+            padding: '12px 16px',
+            background: 'rgba(255,255,255,0.04)',
+            border: `1px solid ${ACCENT_DIM}`,
+            borderRadius: '6px',
+            color: '#d4d0c8',
+            fontSize: '0.9rem',
+          }}
+        />
+        <input
+          type="email"
+          name="email"
+          placeholder="Your email"
+          required
+          style={{
+            padding: '12px 16px',
+            background: 'rgba(255,255,255,0.04)',
+            border: `1px solid ${ACCENT_DIM}`,
+            borderRadius: '6px',
+            color: '#d4d0c8',
+            fontSize: '0.9rem',
+          }}
+        />
+        <textarea
+          name="message"
+          placeholder="Your message"
+          rows={4}
+          required
+          style={{
+            padding: '12px 16px',
+            background: 'rgba(255,255,255,0.04)',
+            border: `1px solid ${ACCENT_DIM}`,
+            borderRadius: '6px',
+            color: '#d4d0c8',
+            fontSize: '0.9rem',
+            resize: 'vertical',
+          }}
+        />
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            padding: '12px 28px',
+            background: 'transparent',
+            border: `1px solid ${ACCENT}`,
+            color: ACCENT,
+            fontSize: '0.8rem',
+            letterSpacing: '0.15em',
+            textTransform: 'uppercase',
+            cursor: loading ? 'wait' : 'pointer',
+            alignSelf: 'flex-start',
+            transition: 'all 0.2s',
+          }}
+        >
+          {loading ? 'Sending...' : 'Send Message'}
+        </button>
+        {formState.message && (
+          <p style={{ fontSize: '0.85rem', color: formState.status === 'success' ? ACCENT : '#e07a5f', margin: 0 }}>
+            {formState.message}
+          </p>
+        )}
+      </motion.form>
+    </motion.section>
+  );
+}

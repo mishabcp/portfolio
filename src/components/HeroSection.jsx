@@ -1,188 +1,193 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Download, ArrowDown } from 'lucide-react';
-import { useInView } from 'react-intersection-observer';
+import Particles from '@tsparticles/react';
+import { loadSlim } from '@tsparticles/slim';
+import { HiChevronDown } from 'react-icons/hi';
+import { resumeData } from '../data/resumeData';
 
-const HeroSection = () => {
-  const canvasRef = useRef(null);
-  const { ref, inView } = useInView({
-    threshold: 0.1,
-    triggerOnce: true
-  });
+const ACCENT = '#4db8a4';
+const ACCENT_DIM = 'rgba(77, 184, 164, 0.3)';
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    let animationId;
+const letterVariants = {
+  hidden: { opacity: 0, y: 60, filter: 'blur(8px)' },
+  visible: (i) => ({
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.5, delay: i * 0.05 },
+  }),
+};
 
-    const particles = [];
-    const particleCount = 50;
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.innerWidth < breakpoint
+  );
+  React.useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    const handler = (e) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, [breakpoint]);
+  return isMobile;
+}
 
-    // Initialize particles
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        size: Math.random() * 2 + 1,
-        opacity: Math.random() * 0.5 + 0.2
-      });
-    }
+export default function HeroSection() {
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const isMobile = useIsMobile();
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach(particle => {
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-
-        // Wrap around edges
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
-
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 255, 255, ${particle.opacity})`;
-        ctx.fill();
-      });
-
-      animationId = requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    return () => cancelAnimationFrame(animationId);
+  const particlesInit = useCallback(async (engine) => {
+    await loadSlim(engine);
   }, []);
 
-  const onButtonClick = () => {
-    const resumeUrl = 'https://raw.githubusercontent.com/mishabcp/portfolio/main/src/assets/resume.pdf';
-    fetch(resumeUrl)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', 'Mishab_Resume.pdf');
-        document.body.appendChild(link);
-        link.click();
-        link.parentNode.removeChild(link);
-        window.URL.revokeObjectURL(url);
-      })
-      .catch((error) => {
-        console.error('Error fetching PDF:', error);
-        alert('Failed to download resume. Please try again later.');
-      });
-  };
-
-  const scrollToAbout = () => {
-    const aboutSection = document.getElementById('about-section');
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const particlesOptions = {
+    fullScreen: { enable: false },
+    background: { color: { value: 'transparent' } },
+    particles: {
+      number: { value: isMobile ? 15 : 40 },
+      color: { value: ACCENT },
+      opacity: { value: { min: 0.1, max: 0.4 } },
+      size: { value: { min: 1, max: 3 } },
+      move: {
+        enable: true,
+        speed: isMobile ? 0.6 : 1,
+        direction: 'none',
+        random: true,
+      },
+    },
+    interactivity: {
+      detect_on: 'canvas',
+      events: {
+        onhover: { enable: !isMobile, mode: 'grab' },
+      },
+      modes: { grab: { distance: 120, links: { opacity: 0.2 } } },
+    },
   };
 
   return (
-    <section ref={ref} id="hero-section" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20 md:pt-0">      {/* Animated Background */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full"
-        width={window.innerWidth}
-        height={window.innerHeight}
+    <section
+      id="hero"
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '6rem 2rem 4rem',
+        overflow: 'hidden',
+      }}
+      onMouseMove={(e) => setMouse({ x: e.clientX, y: e.clientY })}
+    >
+      {/* Cursor glow */}
+      <div
+        className="cursor-glow"
+        style={{
+          left: mouse.x,
+          top: mouse.y,
+        }}
       />
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-500/10 to-pink-500/10" />
-
-      <div className="container mx-auto px-6 text-center relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="max-w-4xl mx-auto"
-        >
-          {/* Greeting */}
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.2, duration: 0.6 }}
-            className="text-cyan-400 text-lg md:text-xl mb-4 font-medium"
-          >
-            Hello, I'm
-          </motion.p>
-
-          {/* Name */}
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 neon-text"
-          >
-            Mishab CP
-          </motion.h1>
-
-          {/* Title */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.6, duration: 0.8 }}
-            className="mb-8"
-          >
-            <h2 className="text-xl md:text-2xl lg:text-3xl text-gray-300 mb-2">
-              Full Stack Developer & API Specialist
-            </h2>
-            <div className="flex items-center justify-center space-x-2 text-sm text-gray-400">
-              <span className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
-              <span>Available for new opportunities</span>
-            </div>
-          </motion.div>
-
-          {/* Description */}
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.8, duration: 0.8 }}
-            className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto mb-12 leading-relaxed"
-          >
-            Crafting scalable web applications with modern technologies. 
-            Specialized in fintech solutions and enterprise systems.
-          </motion.p>
-
-          {/* CTA Buttons */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 1, duration: 0.8 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16"
-          >
-            <motion.button
-              onClick={onButtonClick}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="glass px-8 py-4 rounded-xl text-white font-semibold flex items-center space-x-2 glow hover:bg-cyan-400/20 transition-all duration-300"
-            >
-              <Download size={20} />
-              <span>Download Resume</span>
-            </motion.button>
-
-            <motion.button
-              onClick={scrollToAbout}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="glass px-8 py-4 rounded-xl text-white font-semibold flex items-center space-x-2 border border-cyan-400/30 hover:border-cyan-400/60 transition-all duration-300"
-            >
-              <span>Learn More</span>
-              <ArrowDown size={20} />
-            </motion.button>
-          </motion.div>
-
-
-        </motion.div>
+      {/* Particles */}
+      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+        <Particles id="hero-particles" init={particlesInit} options={particlesOptions} />
       </div>
+
+      <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', width: '100%' }}>
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          style={{
+            fontSize: '0.6rem',
+            letterSpacing: '0.35em',
+            textTransform: 'uppercase',
+            color: 'rgba(77, 184, 164, 0.9)',
+            fontWeight: 500,
+            marginBottom: '1.5rem',
+          }}
+        >
+          {resumeData.title}
+        </motion.p>
+
+        <motion.h1
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
+            fontSize: 'clamp(3.5rem, 10vw, 7.5rem)',
+            fontWeight: 300,
+            lineHeight: 0.95,
+            margin: 0,
+            letterSpacing: '-0.02em',
+            color: ACCENT,
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+            gap: '0.02em',
+          }}
+          initial="hidden"
+          animate="visible"
+          variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
+        >
+          {resumeData.name.split('').map((char, i) => (
+            <motion.span key={i} variants={letterVariants} custom={i} style={{ display: 'inline-block', whiteSpace: char === ' ' ? 'pre' : 'normal' }}>
+              {char}
+            </motion.span>
+          ))}
+        </motion.h1>
+
+        <motion.div
+          initial={{ opacity: 0, scaleX: 0 }}
+          animate={{ opacity: 1, scaleX: 1 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          style={{ width: 60, height: 1, background: ACCENT, margin: '2rem auto' }}
+        />
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          style={{
+            fontSize: '1.05rem',
+            fontWeight: 300,
+            color: '#8a8578',
+            maxWidth: '520px',
+            margin: '0 auto',
+            lineHeight: 1.7,
+          }}
+        >
+          {resumeData.tagline}
+        </motion.p>
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.a
+        href="#about"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.2 }}
+        style={{
+          position: 'absolute',
+          bottom: '2rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          color: ACCENT_DIM,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 4,
+          textDecoration: 'none',
+          fontSize: '0.65rem',
+          letterSpacing: '0.2em',
+          textTransform: 'uppercase',
+        }}
+      >
+        <motion.span
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <HiChevronDown size={28} />
+        </motion.span>
+        Scroll
+      </motion.a>
     </section>
   );
-};
-
-export default HeroSection;
+}

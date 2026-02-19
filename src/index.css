@@ -1,65 +1,62 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-
 :root {
-  --primary-bg: #0a0a0a;
-  --secondary-bg: #1a1a1a;
-  --accent-cyan: #00ffff;
-  --accent-purple: #8b5cf6;
-  --accent-pink: #ec4899;
-  --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --content-max-width: 1400px;
+  --navbar-max-width: 1600px;
 }
 
-* {
-  font-family: 'Inter', sans-serif;
+.content-container {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 130%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
-  background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-bg) 100%);
-  color: white;
-  min-height: 100vh;
+  margin: 0;
+  font-family: 'Outfit', system-ui, sans-serif;
+  background: #141414;
+  color: #d4d0c8;
+  -webkit-font-smoothing: antialiased;
 }
 
-.glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--glass-border);
+/* Thin teal scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(77, 184, 164, 0.5);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #4db8a4;
 }
 
-.neon-text {
-  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Cursor glow: radial gradient follows mouse in hero (applied via inline style / JS) */
+.cursor-glow {
+  pointer-events: none;
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(77, 184, 164, 0.08) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  z-index: 0;
 }
 
-.neon-border {
-  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple)) border-box;
-  border: 2px solid transparent;
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
-
-.glow {
-  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 255, 0.3); }
-  50% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.6); }
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-  
