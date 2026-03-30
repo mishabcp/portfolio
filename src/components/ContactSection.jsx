@@ -145,7 +145,6 @@ export default function ContactSection() {
                     id="contact-message"
                     name="message"
                     className="contact-form-input contact-form-input--message contact-form-input--memo-expand"
-                    placeholder="A line or two is enough — expands when you focus."
                     rows={2}
                     required
                   />

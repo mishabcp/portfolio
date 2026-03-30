@@ -980,11 +980,26 @@ button.project-detail-back {
   }
 }
 
-/* Services — premium silver cards (machined bezel + inset plate) */
+/* Services — premium silver cards (machined bezel + inset plate)
+   .site-frame is 80% width ≥769px, so ~1321px viewport ≈ 950px content — auto-fit(260px) yields 3+1.
+   Use explicit columns: 1 / 2 / 4 by viewport (1550px ≈ first width where 4×260px + gaps fit in that inner track). */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: 1fr;
   gap: clamp(1.5rem, 3.5vw, 2.5rem);
+  align-items: stretch;
+}
+
+@media (min-width: 540px) {
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1550px) {
+  .services-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 .service-block--card {
@@ -992,6 +1007,8 @@ button.project-detail-back {
   isolation: isolate;
   box-sizing: border-box;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
   padding: 2px;
   border-radius: 7px;
   background: linear-gradient(
@@ -1022,6 +1039,10 @@ button.project-detail-back {
   border-radius: 5px;
   padding: clamp(1.5rem, 2.85vw, 2.15rem);
   box-sizing: border-box;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   min-height: 100%;
   background:
     radial-gradient(ellipse 100% 72% at 50% -8%, rgba(255, 255, 255, 0.92), transparent 55%),
@@ -2147,15 +2168,38 @@ button.project-detail-back {
 
 .footer-giant-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(1.1rem, 3vw, 1.75rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 3vw, 1.75rem);
+  column-gap: clamp(0.85rem, 3.5vw, 1.5rem);
   width: 100%;
   min-width: 0;
+  align-items: start;
 }
 
 @media (max-width: 640px) {
   .footer-giant-grid {
-    grid-template-columns: 1fr;
+    column-gap: clamp(0.6rem, 3vw, 0.95rem);
+    row-gap: clamp(0.75rem, 2.5vw, 1.1rem);
+  }
+
+  .footer-giant-label {
+    margin-bottom: 0.45rem;
+  }
+
+  .footer-giant-links {
+    gap: 0.32rem;
+  }
+
+  .footer-giant-resume-row {
+    margin-top: 0.45rem;
+  }
+
+  .footer-shell .nav-resume {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    text-align: center;
+    box-sizing: border-box;
   }
 }
 
