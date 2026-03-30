@@ -1,134 +1,90 @@
-import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { HiMenu, HiX } from 'react-icons/hi';
 import { resumeData } from '../data/resumeData';
+import { useSectionScrollNav } from '../hooks/useSectionScrollNav';
 
-const ACCENT = '#4db8a4';
-const ACCENT_DIM = 'rgba(77, 184, 164, 0.3)';
+const MotionButton = motion.button;
 
 const navLinks = [
-  { label: 'Home', href: '#hero' },
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Education', href: '#education' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', sectionId: 'hero' },
+  { label: 'About', sectionId: 'about' },
+  { label: 'Services', sectionId: 'services' },
+  { label: 'Skills', sectionId: 'skills' },
+  { label: 'Experience', sectionId: 'experience' },
+  { label: 'Projects', sectionId: 'projects' },
+  { label: 'Contact', sectionId: 'contact' },
 ];
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const progressWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  const goToSection = useSectionScrollNav();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  const onNavSection = (sectionId) => {
+    setMobileOpen(false);
+    goToSection(sectionId);
+  };
+
   return (
     <>
-      {/* Scroll progress bar */}
-      <motion.div
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 3,
-          background: ACCENT,
-          transformOrigin: 'left',
-          width: progressWidth,
-          zIndex: 9999,
-        }}
-      />
+      <nav className={`nav-shell${scrolled ? ' nav-shell--scrolled' : ''}`}>
+        <div className="nav-inner">
+          <Link to="/" className="nav-brand">
+            {resumeData.name}
+          </Link>
 
-      <nav
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 1000,
-          padding: '1rem 2rem',
-          background: scrolled ? '#1a1a1a' : 'transparent',
-          borderBottom: scrolled ? `1px solid ${ACCENT_DIM}` : 'none',
-          transition: 'background 0.3s, border-color 0.3s',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          maxWidth: 'var(--navbar-max-width)',
-          margin: '0 auto',
-        }}
-      >
-        <a href="#hero" style={{ color: ACCENT, textDecoration: 'none', fontFamily: "'Cormorant Garamond', serif", fontSize: '1.35rem', fontWeight: 600 }}>
-          {resumeData.name}
-        </a>
-
-        {/* Desktop links */}
-        <div style={{ display: 'none', gap: '2rem', alignItems: 'center' }} className="nav-desktop">
-          {navLinks.map((link) => (
-            <motion.a
-              key={link.href}
-              href={link.href}
-              whileHover={{ y: -1 }}
-              transition={{ duration: 0.15 }}
-              style={{
-                color: '#b8b4a8',
-                textDecoration: 'none',
-                fontSize: '0.8rem',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                transition: 'color 0.2s',
-              }}
-              onMouseOver={(e) => { e.currentTarget.style.color = ACCENT; }}
-              onMouseOut={(e) => { e.currentTarget.style.color = '#b8b4a8'; }}
-              onClick={() => setMobileOpen(false)}
+          <div style={{ display: 'none', gap: '1.75rem', alignItems: 'center' }} className="nav-desktop">
+            {navLinks.map((link) => (
+              <MotionButton
+                key={link.sectionId}
+                type="button"
+                className="nav-link nav-link--section"
+                transition={{ duration: 0.15 }}
+                onClick={() => onNavSection(link.sectionId)}
+              >
+                {link.label}
+              </MotionButton>
+            ))}
+            <a
+              href={resumeData.resumePdf}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="nav-resume"
             >
-              {link.label}
-            </motion.a>
-          ))}
-          <a
-            href={resumeData.resumePdf}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              padding: '8px 20px',
-              border: `1px solid ${ACCENT_DIM}`,
-              color: ACCENT,
-              textDecoration: 'none',
-              fontSize: '0.75rem',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              transition: 'all 0.2s',
-            }}
-            onMouseOver={(e) => { e.currentTarget.style.background = ACCENT_DIM; }}
-            onMouseOut={(e) => { e.currentTarget.style.background = 'transparent'; }}
-          >
-            Resume
-          </a>
-        </div>
+              Resume
+            </a>
+          </div>
 
-        {/* Mobile menu button */}
-        <button
-          type="button"
-          aria-label="Toggle menu"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          style={{
-            display: 'flex',
-            background: 'none',
-            border: 'none',
-            color: '#d4d0c8',
-            cursor: 'pointer',
-            padding: 8,
-          }}
-          className="nav-mobile-toggle"
-        >
-          {mobileOpen ? <HiX size={28} /> : <HiMenu size={28} />}
-        </button>
+          <button
+            type="button"
+            aria-label="Toggle menu"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            style={{
+              display: 'flex',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 8,
+              minWidth: 44,
+              minHeight: 44,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            className="nav-mobile-toggle"
+          >
+            {mobileOpen ? <HiX size={26} /> : <HiMenu size={26} />}
+          </button>
+        </div>
       </nav>
 
-      {/* Mobile overlay menu */}
       <motion.div
         initial={false}
         animate={{ opacity: mobileOpen ? 1 : 0, pointerEvents: mobileOpen ? 'auto' : 'none' }}
@@ -139,46 +95,32 @@ export default function Navbar() {
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'rgba(20, 20, 20, 0.98)',
+          background: 'var(--bg-overlay)',
           zIndex: 999,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '1.5rem',
+          gap: '1.25rem',
         }}
       >
         {navLinks.map((link) => (
-          <a
-            key={link.href}
-            href={link.href}
-            style={{
-              color: '#d4d0c8',
-              textDecoration: 'none',
-              fontSize: '1.25rem',
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              fontFamily: "'Cormorant Garamond', serif",
-            }}
-            onClick={() => setMobileOpen(false)}
+          <button
+            key={link.sectionId}
+            type="button"
+            className="nav-link nav-link--section"
+            style={{ fontSize: '0.8rem', padding: '0.5rem' }}
+            onClick={() => onNavSection(link.sectionId)}
           >
             {link.label}
-          </a>
+          </button>
         ))}
         <a
           href={resumeData.resumePdf}
           target="_blank"
           rel="noopener noreferrer"
-          style={{
-            padding: '12px 28px',
-            border: `1px solid ${ACCENT}`,
-            color: ACCENT,
-            textDecoration: 'none',
-            fontSize: '0.85rem',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-            marginTop: '1rem',
-          }}
+          className="nav-resume"
+          style={{ marginTop: '0.5rem' }}
           onClick={() => setMobileOpen(false)}
         >
           Download Resume
@@ -186,7 +128,7 @@ export default function Navbar() {
       </motion.div>
 
       <style>{`
-        @media (min-width: 768px) {
+        @media (min-width: 1240px) {
           .nav-desktop { display: flex !important; }
           .nav-mobile-toggle { display: none !important; }
         }

@@ -1,63 +1,86 @@
-import React from 'react';
+import { motion } from 'framer-motion';
 import { resumeData } from '../data/resumeData';
-
-const ACCENT = '#4db8a4';
-const ACCENT_DIM = 'rgba(77, 184, 164, 0.3)';
+import { useSectionScrollNav } from '../hooks/useSectionScrollNav';
 
 const quickLinks = [
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', sectionId: 'about' },
+  { label: 'Services', sectionId: 'services' },
+  { label: 'Skills', sectionId: 'skills' },
+  { label: 'Experience', sectionId: 'experience' },
+  { label: 'Projects', sectionId: 'projects' },
+  { label: 'Contact', sectionId: 'contact' },
 ];
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.16, 1, 0.3, 1] } },
+};
+
 export default function Footer() {
+  const goToSection = useSectionScrollNav();
+
   return (
-    <footer
-      style={{
-        borderTop: `1px solid ${ACCENT_DIM}`,
-        padding: '2.5rem 2rem',
-      }}
-    >
-      <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: '1.5rem' }}>
-        <p style={{ fontSize: '0.8rem', color: '#5a5448', margin: 0 }}>
-          © {new Date().getFullYear()} {resumeData.name}. All rights reserved.
-        </p>
-        <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap' }}>
-          {quickLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              style={{
-                color: ACCENT_DIM,
-                textDecoration: 'none',
-                fontSize: '0.75rem',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-              }}
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
-        <a
-          href={resumeData.resumePdf}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{
-            padding: '8px 20px',
-            border: `1px solid ${ACCENT_DIM}`,
-            color: ACCENT,
-            textDecoration: 'none',
-            fontSize: '0.75rem',
-            letterSpacing: '0.15em',
-            textTransform: 'uppercase',
-          }}
+    <footer className="footer-shell">
+      <motion.div
+        className="footer-inner content-container"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: '-80px' }}
+        variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+      >
+        <motion.div className="footer-giant-hero" variants={fadeUp}>
+          <p className="editorial-eyebrow footer-giant-eyebrow">Thanks for visiting</p>
+          <p className="footer-giant-name">{resumeData.name}</p>
+          <p className="footer-giant-sub">{resumeData.title}</p>
+        </motion.div>
+
+        <motion.div
+          className="footer-giant-grid"
+          variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
         >
-          Download Resume
-        </a>
-      </div>
+          <motion.div className="footer-giant-block" variants={fadeUp}>
+            <h3 className="footer-giant-label">On this site</h3>
+            <ul className="footer-giant-links">
+              {quickLinks.map((link) => (
+                <li key={link.sectionId}>
+                  <button
+                    type="button"
+                    className="footer-giant-link"
+                    onClick={() => goToSection(link.sectionId)}
+                  >
+                    {link.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+          <motion.div className="footer-giant-block" variants={fadeUp}>
+            <h3 className="footer-giant-label">Connect</h3>
+            <ul className="footer-giant-links">
+              <li>
+                <a href={`mailto:${resumeData.email}`} className="footer-giant-link">
+                  {resumeData.email}
+                </a>
+              </li>
+              <li>
+                <a href={resumeData.linkedin} target="_blank" rel="noopener noreferrer" className="footer-giant-link">
+                  LinkedIn
+                </a>
+              </li>
+              <li>
+                <a href={resumeData.github} target="_blank" rel="noopener noreferrer" className="footer-giant-link">
+                  GitHub
+                </a>
+              </li>
+              <li className="footer-giant-resume-row">
+                <a href={resumeData.resumePdf} target="_blank" rel="noopener noreferrer" className="nav-resume">
+                  Download resume
+                </a>
+              </li>
+            </ul>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </footer>
   );
 }
