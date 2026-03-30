@@ -33,7 +33,7 @@ const childReveal = {
 function ProjectContentSection({ section }) {
   return (
     <motion.section
-      style={{ marginBottom: 'clamp(2.5rem, 5vw, 3.5rem)' }}
+      style={{ position: 'relative', marginBottom: 'clamp(2.5rem, 5vw, 3.5rem)' }}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-50px' }}
@@ -73,7 +73,7 @@ export default function ProjectDetailPage() {
   if (!project) {
     return (
       <main className="content-container content-container--full project-detail-content" style={{ paddingTop: 'clamp(5rem, 15vh, 8rem)', textAlign: 'center' }}>
-        <h1 className="editorial-h2-section" style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}>
+        <h1 className="editorial-h2-section" style={{ fontSize: 'clamp(1.55rem, 3.6vw, 2.2rem)' }}>
           Project not found
         </h1>
         <p className="editorial-body" style={{ marginBottom: '1.5rem' }}>No project matches this URL.</p>
@@ -105,6 +105,15 @@ export default function ProjectDetailPage() {
   const sectionsAfterGallery = featuresIndex >= 0 ? project.sections.slice(featuresIndex + 1) : [];
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [deckSpreadPct, setDeckSpreadPct] = useState(14);
+
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 600px)');
+    const apply = () => setDeckSpreadPct(mql.matches ? 8 : 14);
+    apply();
+    mql.addEventListener('change', apply);
+    return () => mql.removeEventListener('change', apply);
+  }, []);
 
   useEffect(() => {
     if (!expandedImages.length) return;
@@ -212,7 +221,11 @@ export default function ProjectDetailPage() {
           ))}
 
           <motion.section
-            style={{ marginTop: 'clamp(2rem, 5vw, 3rem)', marginBottom: 0 }}
+            style={{
+              position: 'relative',
+              marginTop: 'clamp(2rem, 5vw, 3rem)',
+              marginBottom: 0,
+            }}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-50px' }}
@@ -240,7 +253,7 @@ export default function ProjectDetailPage() {
             const absPos = Math.abs(pos);
             const isJumping = absPos >= Math.floor(N / 2);
 
-            let xValue = `${pos * 14}%`;
+            let xValue = `${pos * deckSpreadPct}%`;
             let scaleValue = 1 - absPos * 0.07;
             let zIndexValue = 10 - absPos;
 

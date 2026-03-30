@@ -17,19 +17,20 @@ export default function ServicesSection() {
       </motion.span>
 
       <div className="services-grid">
-        {resumeData.services.map((service, i) => (
+        {resumeData.services.map((service) => (
           <motion.div
             key={service.title}
             variants={{ hidden: { opacity: 0, y: 24 }, visible: { opacity: 1, y: 0 } }}
-            className="service-block"
+            className="service-block service-block--card"
           >
-            <div className="editorial-index-num service-block__index">{String(i + 1).padStart(2, '0')}</div>
-            <h3 className="editorial-h3" style={{ fontSize: 'clamp(1.35rem, 2.5vw, 1.85rem)' }}>
-              {service.title}
-            </h3>
-            <p className="editorial-body" style={{ margin: 0, maxWidth: '32rem' }}>
-              {service.desc}
-            </p>
+            <div className="service-block__inner">
+              <h3 className="editorial-h3 service-block__title" style={{ fontSize: 'clamp(1.2rem, 2.25vw, 1.65rem)' }}>
+                {service.title}
+              </h3>
+              <p className="editorial-body service-block__desc" style={{ margin: 0, maxWidth: 'none' }}>
+                {service.desc}
+              </p>
+            </div>
           </motion.div>
         ))}
       </div>

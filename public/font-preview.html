@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Font preview — Michroma + 10 similar fonts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600&family=Electrolize&family=Exo+2:wght@400;600&family=Jura:wght@400;600&family=Michroma&family=Oxanium:wght@400;600&family=Prompt:wght@400;600&family=Quantico:wght@400;700&family=Rajdhani:wght@400;600&family=Saira:wght@400;600&family=Share+Tech&display=swap"
+  />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #0a0a0a;
+      --muted: #5c5c5c;
+      --line: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      background: var(--bg);
+      color: var(--fg);
+      font-family: system-ui, sans-serif;
+      line-height: 1.5;
+      max-width: 56rem;
+      margin-inline: auto;
+    }
+
+    h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 0 0 0.35rem;
+    }
+
+    .hint {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin: 0 0 2rem;
+    }
+
+    .hint code {
+      font-size: 0.8em;
+      background: #f4f4f5;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    .row {
+      border-top: 1px solid var(--line);
+      padding: 1.35rem 0 1.5rem;
+    }
+
+    .row:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .label {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.65rem;
+    }
+
+    .sample-display {
+      font-size: clamp(1.35rem, 3.5vw, 1.85rem);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin: 0 0 0.5rem;
+    }
+
+    .sample-display.ff-quantico {
+      font-weight: 700;
+    }
+
+    .sample-body {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--muted);
+      margin: 0;
+      max-width: 42rem;
+    }
+
+    /* Baseline */
+    .ff-michroma { font-family: 'Michroma', sans-serif; }
+
+    /* 10 similar (tech / geometric; usually less stretched than Michroma) */
+    .ff-chakra { font-family: 'Chakra Petch', sans-serif; }
+    .ff-jura { font-family: 'Jura', sans-serif; }
+    .ff-oxanium { font-family: 'Oxanium', sans-serif; }
+    .ff-electrolize { font-family: 'Electrolize', sans-serif; }
+    .ff-share { font-family: 'Share Tech', sans-serif; }
+    .ff-exo2 { font-family: 'Exo 2', sans-serif; }
+    .ff-rajdhani { font-family: 'Rajdhani', sans-serif; }
+    .ff-saira { font-family: 'Saira', sans-serif; }
+    .ff-quantico { font-family: 'Quantico', sans-serif; }
+    .ff-prompt { font-family: 'Prompt', sans-serif; }
+  </style>
+</head>
+<body>
+  <h1>Michroma + 10 similar fonts</h1>
+  <p class="hint">
+    Same headline and paragraph in each face. With dev server:
+    <code>/font-preview.html</code>
+  </p>
+
+  <div class="row">
+    <div class="label">Baseline — Michroma (wide)</div>
+    <p class="sample-display ff-michroma">Services · Full stack developer</p>
+    <p class="sample-body ff-michroma">
+      Production-grade fintech and enterprise web apps. Laravel, React, MySQL, REST APIs.
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="label">1 · Chakra Petch</div>
+    <p class="sample-display ff-chakra">Services · Full stack developer</p>
+    <p class="sample-body ff-chakra">
+      Production-grade fintech and enterprise web apps. Laravel, React, MySQL, REST APIs.
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="label">2 · Jura</div>
+    <p class="sample-display ff-jura">Services · Full stack developer</p>
+    <p class="sample-body ff-jura">
+      Production-grade fintech and enterprise web apps. Laravel, React, MySQL, REST APIs.
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="label">3 · Oxanium</div>
+    <p class="sample-display ff-oxanium">Services · Full stack developer</p>
+    <p class="sample-body ff-oxanium">
+      Production-grade fintech and enterprise web apps. Laravel, React, MySQL, REST APIs.
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="label">4 · Electrolize</div>
+    <p class="sample-display ff-electrolize">Services · Full stack developer</p>
+    <p class="sample-body ff-electrolize">
+      Production-grade fintech and enterprise web apps. Laravel, React, MySQL, REST APIs.
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="label">5 · Share Tech</div>
+    <p class="sample-display ff-share">Services · Full stack developer</p>
+    <p class="sample-body ff-share">
+      Production-grade fintech and enterprise web apps. Laravel, React, MySQL, REST APIs.
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="label">6 · Exo 2</div>
+    <p class="sample-display ff-exo2">Services · Full stack developer</p>
+    <p class="sample-body ff-exo2">
+      Production-grade fintech and enterprise web apps. Laravel, React, MySQL, REST APIs.
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="label">7 · Rajdhani</div>
+    <p class="sample-display ff-rajdhani">Services · Full stack developer</p>
+    <p class="sample-body ff-rajdhani">
+      Production-grade fintech and enterprise web apps. Laravel, React, MySQL, REST APIs.
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="label">8 · Saira</div>
+    <p class="sample-display ff-saira">Services · Full stack developer</p>
+    <p class="sample-body ff-saira">
+      Production-grade fintech and enterprise web apps. Laravel, React, MySQL, REST APIs.
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="label">9 · Quantico</div>
+    <p class="sample-display ff-quantico">Services · Full stack developer</p>
+    <p class="sample-body ff-quantico">
+      Production-grade fintech and enterprise web apps. Laravel, React, MySQL, REST APIs.
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="label">10 · Prompt</div>
+    <p class="sample-display ff-prompt">Services · Full stack developer</p>
+    <p class="sample-body ff-prompt">
+      Production-grade fintech and enterprise web apps. Laravel, React, MySQL, REST APIs.
+    </p>
+  </div>
+</body>
+</html>

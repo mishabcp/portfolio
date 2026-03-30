@@ -42,10 +42,11 @@ function SectionFallback() {
 export default function Home() {
   return (
     <motion.div
+      className="home-shell"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      style={{ minHeight: '100vh', background: 'var(--bg-base)', color: 'var(--text-primary)' }}
+      style={{ background: 'var(--bg-base)', color: 'var(--text-primary)' }}
     >
       <main className="content-container content-container--full">
         <HeroSection />

@@ -88,7 +88,7 @@ export default function ExperienceSection() {
             <span
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(1.15rem, 2vw, 1.5rem)',
+                fontSize: 'clamp(1.05rem, 1.8vw, 1.35rem)',
                 fontWeight: 400,
                 color: '#000000',
                 lineHeight: 1,

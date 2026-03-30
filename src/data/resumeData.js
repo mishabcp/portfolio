@@ -119,6 +119,9 @@ export const resumeData = {
   ],
   skillCategories,
   skills: skillCategories.flatMap((c) => c.skills),
+  skillsSectionHeadline: 'What I do',
+  skillsSectionIntro:
+    'Full stack delivery from Laravel and Node APIs to React and Next.js frontends — databases, integrations, and production performance.',
   experience: {
     role: 'PHP Full Stack Developer',
     company: 'Netplex IT Solutions',

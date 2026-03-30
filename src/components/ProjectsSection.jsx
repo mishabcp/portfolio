@@ -11,7 +11,7 @@ export default function ProjectsSection() {
       whileInView="visible"
       viewport={{ once: true, margin: '-60px' }}
       variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
-      style={{ padding: 'var(--section-y) 0' }}
+      style={{ position: 'relative', padding: 'var(--section-y) 0' }}
     >
       <div style={{ padding: '0 var(--pad-x)', marginBottom: 'clamp(2rem, 5vw, 3.5rem)' }}>
         <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="editorial-eyebrow" style={{ marginBottom: 0 }}>

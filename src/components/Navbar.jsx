@@ -28,6 +28,15 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!mobileOpen) return undefined;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
   const onNavSection = (sectionId) => {
     setMobileOpen(false);
     goToSection(sectionId);
@@ -86,30 +95,16 @@ export default function Navbar() {
       </nav>
 
       <motion.div
+        className="nav-mobile-overlay"
         initial={false}
         animate={{ opacity: mobileOpen ? 1 : 0, pointerEvents: mobileOpen ? 'auto' : 'none' }}
         transition={{ duration: 0.2 }}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'var(--bg-overlay)',
-          zIndex: 999,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '1.25rem',
-        }}
       >
         {navLinks.map((link) => (
           <button
             key={link.sectionId}
             type="button"
-            className="nav-link nav-link--section"
-            style={{ fontSize: '0.8rem', padding: '0.5rem' }}
+            className="nav-link nav-link--section nav-mobile-overlay__link"
             onClick={() => onNavSection(link.sectionId)}
           >
             {link.label}
@@ -119,8 +114,7 @@ export default function Navbar() {
           href={resumeData.resumePdf}
           target="_blank"
           rel="noopener noreferrer"
-          className="nav-resume"
-          style={{ marginTop: '0.5rem' }}
+          className="nav-resume nav-mobile-overlay__resume"
           onClick={() => setMobileOpen(false)}
         >
           Download Resume

@@ -143,7 +143,6 @@ export default function HeroSection() {
       className="editorial-section editorial-section--hero"
       style={{
         position: 'relative',
-        minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
