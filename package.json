@@ -8,9 +8,15 @@
   },
   "scripts": {
     "dev": "vite",
+    "deps:policy": "node scripts/check-banned-deps.js",
+    "deps:policy:strict": "npm run deps:policy && npm audit --omit=dev --audit-level=high",
+    "prebuild": "npm run deps:policy",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
+  },
+  "overrides": {
+    "axios": "1.14.0"
   },
   "dependencies": {
     "@splinetool/react-spline": "^4.1.0",

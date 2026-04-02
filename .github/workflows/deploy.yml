@@ -18,9 +18,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'  # Update Node.js version to 20
+          cache: 'npm'
 
       - name: Install dependencies
-        uses: bahmutov/npm-install@v1
+        run: npm ci --ignore-scripts
+
+      - name: Enforce dependency policy
+        run: npm run deps:policy
 
       - name: Build project
         run: npm run build
