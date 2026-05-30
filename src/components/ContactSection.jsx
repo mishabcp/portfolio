@@ -4,8 +4,6 @@ import { HiMail, HiPhone, HiLocationMarker } from 'react-icons/hi';
 import { FaLinkedin, FaGithub, FaWhatsapp } from 'react-icons/fa';
 import { resumeData } from '../data/resumeData';
 
-const WEB3FORMS_ACCESS_KEY = 'b118b50d-7294-45cd-9a5e-0b80604cea25';
-
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
@@ -13,32 +11,16 @@ const fadeUp = {
 
 export default function ContactSection() {
   const [formState, setFormState] = useState({ status: null, message: '' });
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setLoading(true);
-    setFormState({ status: null, message: '' });
-    const form = e.target;
-    const formData = new FormData(form);
-    formData.append('access_key', WEB3FORMS_ACCESS_KEY);
 
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        body: formData,
-      });
-      const data = await res.json();
-      if (data.success) {
-        setFormState({ status: 'success', message: "Thanks! I'll get back to you soon." });
-        form.reset();
-      } else {
-        setFormState({ status: 'error', message: data.message || 'Something went wrong.' });
-      }
-    } catch {
-      setFormState({ status: 'error', message: 'Failed to send. Please email me directly.' });
-    }
-    setLoading(false);
+    setFormState({
+      status: 'success',
+      message: 'Demo mode: form submission is disabled.',
+    });
+
+    e.target.reset();
   };
 
   const contactItems = [
@@ -121,6 +103,7 @@ export default function ContactSection() {
                       required
                     />
                   </div>
+
                   <div className="contact-form-field">
                     <label htmlFor="contact-email" className="editorial-meta contact-form-label">
                       Email
@@ -153,13 +136,12 @@ export default function ContactSection() {
                 <div className="contact-form-memo__foot">
                   <motion.button
                     type="submit"
-                    disabled={loading}
-                    className={`editorial-meta contact-form-submit contact-form-submit--memo${loading ? ' contact-form-submit--loading' : ''}`}
-                    whileHover={loading ? undefined : { scale: 1.02, y: -1 }}
-                    whileTap={loading ? undefined : { scale: 0.98 }}
+                    className="editorial-meta contact-form-submit contact-form-submit--memo"
+                    whileHover={{ scale: 1.02, y: -1 }}
+                    whileTap={{ scale: 0.98 }}
                     transition={{ type: 'spring', stiffness: 500, damping: 20 }}
                   >
-                    {loading ? 'Sending…' : 'Send →'}
+                    Send →
                   </motion.button>
                 </div>
 
@@ -184,6 +166,7 @@ export default function ContactSection() {
             aria-label="Direct contact and social links"
           >
             <p className="editorial-meta contact-board__aside-label">Direct</p>
+
             <motion.div
               variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.04 } } }}
               className="contact-channels"
@@ -201,7 +184,9 @@ export default function ContactSection() {
                     </span>
                   </>
                 );
+
                 const key = `${item.label}-${item.value}`;
+
                 if (item.kind === 'static') {
                   return (
                     <motion.div key={key} variants={fadeUp} className="contact-channel contact-channel--static">
@@ -209,6 +194,7 @@ export default function ContactSection() {
                     </motion.div>
                   );
                 }
+
                 return (
                   <motion.a
                     key={key}
