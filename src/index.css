@@ -3549,20 +3549,22 @@ html.lenis body {
 
 /* ---------- Hero: tablet & mobile (≤ 1023px) ---------- */
 @media (max-width: 1023px) {
-  /* Lock hero to one viewport on tablet/mobile. The compact video preview
-     + tightened text below are sized to fit; nothing scrolls inside the
-     hero — users swipe to reach the next section. */
+  /* Use min-height (not height) so the hero can grow when there isn't
+     enough vertical room — prevents the eyebrow → headline → sublines →
+     CTAs → stats stack from feeling compressed on smaller screens. The
+     section still fills at least one viewport so it reads as the hero. */
   .hero-marketing {
-    height: calc(100vh - var(--navbar-height));
-    height: calc(100dvh - var(--navbar-height));
-    overflow: hidden;
-    padding-top: clamp(1rem, 3vh, 2rem);
-    padding-bottom: clamp(1.25rem, 3.5vh, 2.5rem);
+    height: auto;
+    min-height: calc(100vh - var(--navbar-height));
+    min-height: calc(100dvh - var(--navbar-height));
+    overflow: visible;
+    padding-top: clamp(1.25rem, 4vh, 2.25rem);
+    padding-bottom: clamp(1.75rem, 5vh, 3rem);
   }
 
   .hero-marketing__layout {
-    height: 100%;
-    gap: clamp(0.75rem, 2vh, 1.25rem);
+    height: auto;
+    gap: clamp(2rem, 5vh, 3.25rem);
     justify-content: center;
   }
 
@@ -3572,18 +3574,23 @@ html.lenis body {
   }
 
   /* Video shown ABOVE the text on mobile/tablet (DOM order stays text-
-     first for a11y/SEO; swap is purely visual via flex `order`). Width
-     is capped so the 16:9 preview stays a compact accent and the whole
-     hero fits within one viewport. */
+     first for a11y/SEO; swap is purely visual via flex `order`). On
+     mobile we want the preview to feel as generous as the headline,
+     so the rem-based cap is dropped in favour of 90% of the layout
+     width — symmetrical with the headline that now spans 100% of
+     the content column. Vertical margins give top/bottom breathing
+     room without touching the horizontal footprint. */
   .hero-marketing__media {
     order: -1;
-    width: min(100%, 22rem);
+    width: 90%;
+    max-width: none;
     flex: 0 0 auto;
     margin-inline: auto;
+    margin-block: clamp(0.75rem, 2.5vh, 1.75rem) clamp(0.5rem, 2vh, 1.5rem);
   }
 
-  /* Scroll chevron hidden on mobile — section now fills the viewport
-     exactly, so natural swipe scrolling is enough. */
+  /* Scroll chevron hidden on mobile — the section now flows naturally,
+     so the swipe affordance is implied by the cut-off stats row. */
   .hero-marketing__scroll {
     display: none;
   }
@@ -3596,63 +3603,100 @@ html.lenis body {
     padding-right: clamp(1rem, 5vw, 1.5rem);
   }
 
+  /* Mobile layout gap is tightened — the per-element margins below
+     handle spacing between text blocks, and the larger gap was only
+     needed to push the video clear of the eyebrow. */
+  .hero-marketing__layout {
+    gap: clamp(1rem, 3vh, 1.75rem);
+  }
+
   .hero-marketing__eyebrow {
     font-size: 0.68rem;
-    padding: 0.35rem 0.7rem;
-    margin-bottom: clamp(0.4rem, 1.2vh, 0.75rem);
+    padding: 0.4rem 0.8rem;
+    margin-bottom: clamp(0.6rem, 1.6vh, 0.9rem);
     text-align: center;
   }
 
   .hero-marketing__signature {
-    gap: 0.3rem 0.45rem;
-    margin-bottom: clamp(0.3rem, 1vh, 0.6rem);
+    gap: 0.35rem 0.5rem;
+    margin-bottom: clamp(0.35rem, 1vh, 0.6rem);
   }
 
   .hero-marketing__signature-name.editorial-display--hero {
     font-size: clamp(1.5rem, 8vw, 2.25rem);
   }
 
+  /* Headline keeps the full long copy ("…building websites and end-to-end
+     web apps.") on mobile too. The type scale is dialled down and the
+     headline is forced to fill the content column (width: 100% + no
+     max-width) so it can use the entire horizontal room — that lets
+     the text wrap to fewer lines and saves vertical space. A tighter
+     line-height squeezes out one more row of breathing space. */
   .hero-marketing__headline {
-    font-size: clamp(1.25rem, 6.5vw, 1.9rem);
-    line-height: 1.1;
-    max-width: 20ch;
+    font-size: clamp(0.88rem, 3.6vw, 1.15rem);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    max-width: none;
+    width: 100%;
   }
 
   .hero-marketing__subline-bold {
-    font-size: clamp(0.88rem, 3.8vw, 1rem);
-    margin: clamp(0.5rem, 1.4vh, 0.85rem) 0 clamp(0.25rem, 0.7vh, 0.5rem);
+    font-size: clamp(0.9rem, 3.8vw, 1.02rem);
+    line-height: 1.4;
+    margin: clamp(0.65rem, 1.6vh, 1rem) 0 clamp(0.35rem, 0.8vh, 0.55rem);
   }
 
   .hero-marketing__subline {
-    font-size: clamp(0.8rem, 3.4vw, 0.92rem);
-    line-height: 1.45;
-    margin-bottom: clamp(0.75rem, 1.8vh, 1.15rem);
+    font-size: clamp(0.85rem, 3.5vw, 0.95rem);
+    line-height: 1.55;
+    margin-bottom: clamp(0.7rem, 1.8vh, 1.1rem);
   }
 
-  /* Keep CTAs side-by-side (not stacked) to save vertical space; smaller
-     padding and font so they still fit comfortably on a 360px screen. */
+  /* CTAs sit side-by-side on small phones too. The buttons share the
+     content row at 1:1, with reduced padding + smaller type so both
+     fit on a 360px screen without wrapping. */
   .hero-marketing__ctas {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: center;
     gap: 0.5rem;
-    margin-bottom: clamp(0.65rem, 1.8vh, 1.1rem);
+    margin-bottom: clamp(0.65rem, 1.6vh, 1rem);
+    width: 100%;
+    max-width: none;
+  }
+
+  .hero-marketing__ctas > * {
+    flex: 1 1 0;
+    min-width: 0;
   }
 
   .hero-marketing__ctas .cta-primary,
   .hero-marketing__ctas .cta-secondary {
-    padding: 0.7rem 0.95rem;
-    font-size: 0.74rem;
-    letter-spacing: 0.08em;
-    gap: 0.4rem;
+    padding: 0.65rem 0.6rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    gap: 0.35rem;
+    width: 100%;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  /* Hide the trailing arrow on the primary CTA on small phones — keeps
+     the WhatsApp icon + label visible without the row overflowing. */
+  .hero-marketing__ctas .cta-primary__arrow {
+    display: none;
   }
 
   .hero-marketing__stats {
-    padding-top: clamp(0.5rem, 1.5vh, 1rem);
-    gap: 1rem;
+    padding-top: clamp(0.55rem, 1.4vh, 0.9rem);
+    gap: 1.25rem;
   }
 
-  /* On the narrowest phones a tighter video preview keeps the budget for
-     headline + sublines + CTAs + stats below it. */
+  /* Same 90% rule from the tablet breakpoint carries through here —
+     small phones just get a touch more vertical breathing room. */
   .hero-marketing__media {
-    width: min(100%, 18rem);
+    margin-block: clamp(1rem, 3vh, 2rem) clamp(0.75rem, 2.4vh, 1.75rem);
   }
 }
 

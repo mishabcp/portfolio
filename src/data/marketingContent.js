@@ -13,8 +13,11 @@ export const marketingContent = {
     headline: 'Full stack developer building websites and end-to-end web apps.',
     accentWord: 'end-to-end',
     sublineBold: 'Built end-to-end. Performance-tuned. Shipped.',
+    sublineBoldMobile: 'End-to-end. Performance-tuned. Shipped.',
     subline:
       "I'm Mishab — a full-stack developer with 2+ years at a Dubai-based company. PHP / Laravel / React / Next.js. I build marketing sites and real products: payment platforms, ERP-style ops tools, and pragmatic LLM features.",
+    sublineMobile:
+      '2+ years building real products — payment platforms, ops tools, and pragmatic AI features.',
     primaryCta: {
       label: 'Message on WhatsApp',
       href: resumeData.whatsapp,

@@ -15,6 +15,24 @@ import { usePlayOnView } from '../hooks/usePlayOnView';
 import HeroBackdrop from './HeroBackdrop';
 
 const MAGNETIC_MAX = 5;
+const MOBILE_BREAKPOINT_PX = 640;
+
+/* Live-tracked `prefers narrow viewport` flag. The lazy initial value
+   avoids a flash of the desktop copy before the first effect runs. */
+function useIsMobile(maxWidth = MOBILE_BREAKPOINT_PX) {
+  const query = `(max-width: ${maxWidth}px)`;
+  const [isMobile, setIsMobile] = React.useState(() =>
+    typeof window !== 'undefined' ? window.matchMedia(query).matches : false,
+  );
+  React.useEffect(() => {
+    const mq = window.matchMedia(query);
+    const apply = () => setIsMobile(mq.matches);
+    apply();
+    mq.addEventListener('change', apply);
+    return () => mq.removeEventListener('change', apply);
+  }, [query]);
+  return isMobile;
+}
 
 function MagneticWrap({ children, reducedMotion }) {
   const ref = React.useRef(null);
@@ -126,8 +144,13 @@ export default function HeroSection() {
     return () => mq.removeEventListener('change', apply);
   }, []);
 
+  const isMobile = useIsMobile();
   const { hero } = marketingContent;
-  const headlineWords = hero.headline.split(' ');
+  const headlineText = isMobile && hero.headlineMobile ? hero.headlineMobile : hero.headline;
+  const sublineBoldText =
+    isMobile && hero.sublineBoldMobile ? hero.sublineBoldMobile : hero.sublineBold;
+  const sublineText = isMobile && hero.sublineMobile ? hero.sublineMobile : hero.subline;
+  const headlineWords = headlineText.split(' ');
 
   return (
     <section
@@ -200,7 +223,7 @@ export default function HeroSection() {
           transition={{ duration: 0.55, delay: 0.7 }}
           className="hero-marketing__subline-bold"
         >
-          {hero.sublineBold}
+          {sublineBoldText}
         </motion.p>
 
         <motion.p
@@ -209,7 +232,7 @@ export default function HeroSection() {
           transition={{ duration: 0.55, delay: 0.85 }}
           className="editorial-body hero-marketing__subline"
         >
-          {hero.subline}
+          {sublineText}
         </motion.p>
 
         <motion.nav
