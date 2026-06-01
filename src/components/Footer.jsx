@@ -3,12 +3,12 @@ import { resumeData } from '../data/resumeData';
 import { useSectionScrollNav } from '../hooks/useSectionScrollNav';
 
 const quickLinks = [
+  { label: 'Process', sectionId: 'process' },
+  { label: 'Packages', sectionId: 'packages' },
+  { label: 'Case studies', sectionId: 'case-studies' },
   { label: 'About', sectionId: 'about' },
-  { label: 'Services', sectionId: 'services' },
-  { label: 'Skills', sectionId: 'skills' },
-  { label: 'Experience', sectionId: 'experience' },
-  { label: 'Projects', sectionId: 'projects' },
-  { label: 'Contact', sectionId: 'contact' },
+  { label: 'FAQ', sectionId: 'faq' },
+  { label: 'Contact', sectionId: 'final-cta' },
 ];
 
 const fadeUp = {

@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getProjectBySlug } from '../data/projects';
 import { getTechIcon } from '../data/techIcons';
+import { getSkillBrandColor } from '../data/skillBrandColors';
 import { useSectionScrollNav } from '../hooks/useSectionScrollNav';
 
 const ACCENT_DIM = 'rgba(0, 0, 0, 0.22)';
@@ -29,6 +30,9 @@ const childReveal = {
     transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } 
   },
 };
+
+const narrativeSectionTitles = new Set(['Challenges & solutions', 'Learnings']);
+const hiddenFromTechnicalDetails = new Set(['Overview / problem']);
 
 function ProjectContentSection({ section }) {
   return (
@@ -65,28 +69,215 @@ function ProjectContentSection({ section }) {
   );
 }
 
+function ProjectLinks({ links }) {
+  if (!links || links.length === 0) return null;
+
+  return (
+    <>
+      {links.map((link) =>
+        link.href ? (
+          <a
+            key={link.label}
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="editorial-outline-btn"
+          >
+            {link.label}
+          </a>
+        ) : (
+          <span
+            key={link.label}
+            className="editorial-meta"
+            style={{
+              padding: '0.45rem 1rem',
+              border: `1px dashed ${ACCENT_DIM}`,
+              color: 'var(--text-muted)',
+            }}
+          >
+            {link.label} — coming soon
+          </span>
+        ),
+      )}
+    </>
+  );
+}
+
+function ProjectAtAGlance({ project, stackItems, slug }) {
+  const summary = project.atAGlance || {
+    problem: project.description,
+    solution: project.detailTagline,
+    role: 'Full-stack build',
+    status: 'Case study',
+  };
+
+  return (
+    <motion.section
+      className="project-at-glance"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-50px' }}
+      variants={sectionReveal}
+    >
+      <motion.div className="project-at-glance__eyebrow" variants={childReveal}>
+        At a glance
+      </motion.div>
+      <div className="project-at-glance__grid">
+        <motion.div className="project-at-glance__cell project-at-glance__cell--wide" variants={childReveal}>
+          <span>Problem</span>
+          <p>{summary.problem}</p>
+        </motion.div>
+        <motion.div className="project-at-glance__cell project-at-glance__cell--wide" variants={childReveal}>
+          <span>Solution</span>
+          <p>{summary.solution}</p>
+        </motion.div>
+        <motion.div className="project-at-glance__cell" variants={childReveal}>
+          <span>Role</span>
+          <p>{summary.role}</p>
+        </motion.div>
+        <motion.div className="project-at-glance__cell" variants={childReveal}>
+          <span>Status</span>
+          <p>{summary.status}</p>
+        </motion.div>
+        <motion.div className="project-at-glance__cell project-at-glance__cell--stack" variants={childReveal}>
+          <span>Stack</span>
+          <div className="project-at-glance__stack">
+            {stackItems.slice(0, 6).map((item) => {
+              const Icon = getTechIcon(item);
+              return (
+                <span key={`${slug}-glance-${item}`} className="editorial-tag editorial-tag--with-icon">
+                  <Icon
+                    style={{
+                      fontSize: '1rem',
+                      flexShrink: 0,
+                      color: getSkillBrandColor(item),
+                    }}
+                    aria-hidden
+                  />
+                  <span>{item}</span>
+                </span>
+              );
+            })}
+          </div>
+        </motion.div>
+      </div>
+    </motion.section>
+  );
+}
+
+function ProjectGalleryDeck({ images, currentIndex, deckSpreadPct }) {
+  if (images.length === 0) return null;
+
+  const imageCount = images.length;
+
+  return (
+    <motion.div
+      className="project-gallery-deck editorial-bleed"
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-100px' }}
+      transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div className="deck-container">
+        {images.map((card, i) => {
+          const offset = (i - (currentIndex % imageCount) + imageCount) % imageCount;
+          const pos = offset > Math.floor(imageCount / 2) ? offset - imageCount : offset;
+          const absPos = Math.abs(pos);
+          const isJumping = absPos >= Math.floor(imageCount / 2);
+
+          let xValue = `${pos * deckSpreadPct}%`;
+          let scaleValue = 1 - absPos * 0.07;
+          let zIndexValue = 10 - absPos;
+
+          if (isJumping) {
+            zIndexValue = 1;
+          }
+
+          return (
+            <motion.figure
+              key={`${card.src}-${i}`}
+              className="deck-card"
+              data-depth={Math.min(absPos, 6)}
+              initial={false}
+              animate={{
+                x: xValue,
+                scale: scaleValue,
+                zIndex: zIndexValue,
+              }}
+              transition={{
+                duration: 0.7,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+            >
+              <img src={card.src} alt={card.alt} loading="lazy" />
+            </motion.figure>
+          );
+        })}
+      </div>
+    </motion.div>
+  );
+}
+
+function ProjectHighlights({ highlights }) {
+  if (!highlights || highlights.length === 0) return null;
+
+  return (
+    <motion.section
+      className="project-highlights"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-50px' }}
+      variants={sectionReveal}
+    >
+      <motion.div className="project-detail-divider-title" variants={childReveal}>
+        <span />
+        <strong>Key highlights</strong>
+        <span />
+      </motion.div>
+      <div className="project-highlights__grid">
+        {highlights.map((item, index) => (
+          <motion.article key={item.title} className="project-highlight-card" variants={childReveal}>
+            <span className="project-highlight-card__index">{String(index + 1).padStart(2, '0')}</span>
+            <h2>{item.title}</h2>
+            <p>{item.body}</p>
+          </motion.article>
+        ))}
+      </div>
+    </motion.section>
+  );
+}
+
+function ProjectTechnicalDetails({ sections }) {
+  if (sections.length === 0) return null;
+
+  return (
+    <motion.section
+      className="project-detail-technical"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: '-50px' }}
+      variants={sectionReveal}
+    >
+      <motion.details className="project-detail-accordion" variants={childReveal}>
+        <summary>
+          <span>Technical details</span>
+          <small>features, architecture, performance, security, deployment</small>
+        </summary>
+        <div className="project-detail-accordion__content">
+          {sections.map((section) => (
+            <ProjectContentSection key={section.title} section={section} />
+          ))}
+        </div>
+      </motion.details>
+    </motion.section>
+  );
+}
+
 export default function ProjectDetailPage() {
   const { slug } = useParams();
   const goToSection = useSectionScrollNav();
   const project = slug ? getProjectBySlug(slug) : undefined;
-
-  if (!project) {
-    return (
-      <main className="content-container content-container--full project-detail-content" style={{ paddingTop: 'clamp(5rem, 15vh, 8rem)', textAlign: 'center' }}>
-        <h1 className="editorial-h2-section" style={{ fontSize: 'clamp(1.55rem, 3.6vw, 2.2rem)' }}>
-          Project not found
-        </h1>
-        <p className="editorial-body" style={{ marginBottom: '1.5rem' }}>No project matches this URL.</p>
-        <Link to="/" className="editorial-link-quiet">
-          Back to home
-        </Link>
-      </main>
-    );
-  }
-
-  const heroTech = project.detailTech || project.tech;
-  const techItems = heroTech.split(' · ').map((s) => s.trim()).filter(Boolean);
-  const gridImages = project.gallery || [];
+  const gridImages = project?.gallery || [];
 
   // Expand images if there are too few to fill 7 symmetric fan slots (-3…3). The while loop
   // overshoots for some lengths (e.g. 4 images → 8); cap at 7 so N stays odd and the pos map stays symmetric.
@@ -99,10 +290,6 @@ export default function ProjectDetailPage() {
       expandedImages = expandedImages.slice(0, 7);
     }
   }
-
-  const featuresIndex = project.sections.findIndex((s) => s.title === 'Features');
-  const sectionsBeforeGallery = featuresIndex >= 0 ? project.sections.slice(0, featuresIndex + 1) : project.sections;
-  const sectionsAfterGallery = featuresIndex >= 0 ? project.sections.slice(featuresIndex + 1) : [];
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [deckSpreadPct, setDeckSpreadPct] = useState(14);
@@ -123,11 +310,30 @@ export default function ProjectDetailPage() {
     return () => clearInterval(timer);
   }, [expandedImages.length]);
 
-  const N = expandedImages.length;
+  if (!project) {
+    return (
+      <main className="content-container project-detail-content" style={{ paddingTop: 'clamp(5rem, 15vh, 8rem)', textAlign: 'center' }}>
+        <h1 className="editorial-h2-section" style={{ fontSize: 'clamp(1.55rem, 3.6vw, 2.2rem)' }}>
+          Project not found
+        </h1>
+        <p className="editorial-body" style={{ marginBottom: '1.5rem' }}>No project matches this URL.</p>
+        <Link to="/" className="editorial-link-quiet">
+          Back to home
+        </Link>
+      </main>
+    );
+  }
+
+  const heroTech = project.detailTech || project.tech;
+  const stackItems = (project.tech || heroTech).split(' · ').map((s) => s.trim()).filter(Boolean);
+  const narrativeSections = project.sections.filter((section) => narrativeSectionTitles.has(section.title));
+  const technicalSections = project.sections.filter(
+    (section) => !narrativeSectionTitles.has(section.title) && !hiddenFromTechnicalDetails.has(section.title),
+  );
 
   return (
     <motion.article initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.45, ease: 'easeOut' }} style={{ paddingBottom: 'clamp(3rem, 8vw, 5rem)' }}>
-      <div className="content-container content-container--full">
+      <div className="content-container">
         <motion.header
           className="project-detail-header"
           initial="hidden"
@@ -161,139 +367,52 @@ export default function ProjectDetailPage() {
             </motion.p>
           )}
 
-          <motion.div 
-            style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }} 
-            variants={childReveal}
-          >
-            {techItems.map((item, idx) => {
-              const Icon = getTechIcon(item);
-              // Each tag drifts differently
-              const drift = (idx % 3 - 1) * 12; 
-              return (
-                <motion.span 
-                  key={`${slug}-${item}`} 
-                  className="editorial-tag editorial-tag--with-icon"
-                  whileHover={{ y: -2, backgroundColor: 'rgba(0,0,0,0.08)' }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Icon style={{ fontSize: '0.95rem', flexShrink: 0 }} aria-hidden />
-                  <span>{item}</span>
-                </motion.span>
-              );
-            })}
-          </motion.div>
-
           {project.links && project.links.length > 0 && (
-            <motion.div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.65rem', marginTop: 'clamp(1.5rem, 3vw, 2rem)' }} variants={childReveal}>
-              {project.links.map((link) =>
-                link.href ? (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="editorial-outline-btn"
-                    style={{ display: 'inline-block' }}
-                  >
-                    {link.label}
-                  </a>
-                ) : (
-                  <span
-                    key={link.label}
-                    className="editorial-meta"
-                    style={{
-                      padding: '0.45rem 1rem',
-                      border: `1px dashed ${ACCENT_DIM}`,
-                      color: 'var(--text-muted)',
-                    }}
-                  >
-                    {link.label} — coming soon
-                  </span>
-                ),
-              )}
+            <motion.div className="project-detail-actions" variants={childReveal}>
+              <ProjectLinks links={project.links} />
             </motion.div>
           )}
         </motion.header>
 
-        <div className="project-detail-content">
-          {sectionsBeforeGallery.map((section) => (
-            <ProjectContentSection key={section.title} section={section} />
-          ))}
+        <div className="project-detail-content project-detail-content--intro">
+          <ProjectAtAGlance project={project} stackItems={stackItems} slug={slug} />
+        </div>
+      </div>
 
-          <motion.section
-            style={{
-              position: 'relative',
-              marginTop: 'clamp(2rem, 5vw, 3rem)',
-              marginBottom: 0,
-            }}
+      <ProjectGalleryDeck images={expandedImages} currentIndex={currentIndex} deckSpreadPct={deckSpreadPct} />
+
+      <div className="content-container">
+        <div className="project-detail-content project-detail-content--after-gallery">
+          <ProjectHighlights highlights={project.highlights} />
+
+          {narrativeSections.length > 0 && (
+            <div className="project-detail-narrative">
+              {narrativeSections.map((section) => (
+                <ProjectContentSection key={section.title} section={section} />
+              ))}
+            </div>
+          )}
+
+          <ProjectTechnicalDetails sections={technicalSections} />
+
+          <motion.div
+            className="project-detail-bottom-actions"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-50px' }}
             variants={sectionReveal}
           >
-            <motion.h2 className="project-detail-section-title" style={{ marginBottom: 0 }} variants={childReveal}>
-              Gallery
-            </motion.h2>
-          </motion.section>
+            <motion.button
+              type="button"
+              className="project-detail-back project-detail-back--bottom"
+              onClick={() => goToSection('projects')}
+              variants={childReveal}
+            >
+              ← All projects
+            </motion.button>
+          </motion.div>
         </div>
       </div>
-
-      <motion.div
-        className="project-gallery-deck editorial-bleed"
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-100px' }}
-        transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <div className="deck-container">
-          {expandedImages.map((card, i) => {
-            const offset = (i - (currentIndex % N) + N) % N;
-            // Map offset linearly into symmetric steps (e.g. -3, -2, -1, 0, 1, 2, 3)
-            const pos = offset > Math.floor(N / 2) ? offset - N : offset;
-            const absPos = Math.abs(pos);
-            const isJumping = absPos >= Math.floor(N / 2);
-
-            let xValue = `${pos * deckSpreadPct}%`;
-            let scaleValue = 1 - absPos * 0.07;
-            let zIndexValue = 10 - absPos;
-
-            if (isJumping) {
-              // Ensure the card traversing the background remains fully tucked behind
-              zIndexValue = 1;
-            }
-
-            return (
-              <motion.figure
-                key={`${card.src}-${i}`}
-                className="deck-card"
-                data-depth={Math.min(absPos, 6)}
-                initial={false}
-                animate={{
-                  x: xValue,
-                  scale: scaleValue,
-                  zIndex: zIndexValue,
-                }}
-                transition={{
-                  duration: 0.7,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-              >
-                <img src={card.src} alt={card.alt} loading="lazy" />
-              </motion.figure>
-            );
-          })}
-        </div>
-      </motion.div>
-
-      {sectionsAfterGallery.length > 0 && (
-        <div className="content-container content-container--full">
-          <div className="project-detail-content" style={{ paddingTop: 'clamp(2rem, 5vw, 3rem)' }}>
-            {sectionsAfterGallery.map((section) => (
-              <ProjectContentSection key={section.title} section={section} />
-            ))}
-          </div>
-        </div>
-      )}
     </motion.article>
   );
 }

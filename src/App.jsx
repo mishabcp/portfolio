@@ -13,7 +13,7 @@ function App() {
 
   React.useEffect(() => {
     const instance = new Lenis({
-      lerp: 0.05, // Lower value = smoother, more "weighty" scroll
+      lerp: 0.05,
       wheelMultiplier: 1.1,
       gestureMultiplier: 1,
       smoothWheel: true,

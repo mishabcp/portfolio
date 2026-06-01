@@ -1,99 +1,63 @@
-import React from 'react';
 import { motion } from 'framer-motion';
+import { marketingContent } from '../data/marketingContent';
 import { resumeData } from '../data/resumeData';
 
-const ACCENT = '#000000';
+const fadeUp = {
+  hidden: { opacity: 0, y: 22 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export default function AboutSection() {
+  const { about } = marketingContent;
+  const { experience } = resumeData;
+
   return (
     <motion.section
       id="about"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-80px' }}
-      variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-      className="editorial-section"
+      variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+      className="editorial-section about-section"
     >
-      <motion.span variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="editorial-eyebrow">
-        Who I Am
+      <motion.span variants={fadeUp} className="editorial-eyebrow">
+        {about.eyebrow}
       </motion.span>
 
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 300px), 1fr))',
-          gap: 'clamp(3rem, 8vw, 6rem)',
-          alignItems: 'start',
-        }}
-      >
-        <div>
-          <motion.h2
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-            className="about-headline"
-          >
-            <span className="about-headline__primary">{resumeData.aboutHeadline}</span>
+      <div className="about-section__grid">
+        <div className="about-section__lede">
+          <motion.h2 variants={fadeUp} className="about-section__headline">
+            {about.headline}
           </motion.h2>
 
-          <motion.p
-            variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-            transition={{ duration: 0.6 }}
-            className="editorial-body"
-            style={{ marginBottom: '1.25rem', maxWidth: 'var(--read-max-width)' }}
-          >
-            {resumeData.summary}
+          <motion.p variants={fadeUp} transition={{ duration: 0.55 }} className="editorial-body about-section__body">
+            {about.body1}
           </motion.p>
-          {resumeData.aboutContinuation && (
-            <motion.p
-              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }}
-              transition={{ duration: 0.6 }}
-              className="editorial-body"
-              style={{ marginBottom: 0, maxWidth: 'var(--read-max-width)' }}
-            >
-              {resumeData.aboutContinuation}
-            </motion.p>
-          )}
+          <motion.p variants={fadeUp} transition={{ duration: 0.55 }} className="editorial-body about-section__body">
+            {about.body2}
+          </motion.p>
+          <motion.p variants={fadeUp} transition={{ duration: 0.55 }} className="editorial-body about-section__body about-section__body--quiet">
+            {about.body3}
+          </motion.p>
         </div>
 
-        <motion.div variants={{ hidden: { opacity: 0, x: 20 }, visible: { opacity: 1, x: 0 } }} className="about-panel">
-          <h3 className="editorial-h3 about-panel__heading">How I Work</h3>
+        <motion.aside variants={fadeUp} className="about-section__rail" aria-label="Current role">
+          <span className="editorial-meta about-section__rail-label">Currently</span>
+          <p className="about-section__rail-role">{experience.role}</p>
+          <p className="about-section__rail-company">
+            {experience.company}, {experience.location}
+          </p>
+          <p className="editorial-meta about-section__rail-period">{experience.period}</p>
 
-          <div className="about-panel__steps">
-            {resumeData.process.map((step, i) => (
-              <div key={i} className="about-panel__step">
-                <span
-                  style={{
-                    position: 'absolute',
-                    left: 0,
-                    top: '0.15rem',
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: 'var(--text-caption)',
-                    fontWeight: 600,
-                    color: ACCENT,
-                    opacity: 0.45,
-                    letterSpacing: '0.08em',
-                  }}
-                >
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <h4
-                  style={{
-                    fontFamily: 'var(--font-sans)',
-                    fontSize: 'var(--text-body-lg)',
-                    fontWeight: 500,
-                    color: 'var(--text-primary)',
-                    margin: '0 0 0.4rem',
-                    letterSpacing: '0.02em',
-                  }}
-                >
-                  {step.title}
-                </h4>
-                <p className="editorial-body" style={{ margin: 0, maxWidth: 'none' }}>
-                  {step.desc}
-                </p>
-              </div>
+          <ul className="about-section__rail-points">
+            {experience.points.map((point, i) => (
+              <li key={i} className="about-section__rail-point">
+                <span className="about-section__rail-bullet" aria-hidden />
+                <span>{point}</span>
+              </li>
             ))}
-          </div>
-        </motion.div>
+          </ul>
+        </motion.aside>
       </div>
     </motion.section>
   );

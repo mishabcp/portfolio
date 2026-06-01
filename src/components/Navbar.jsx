@@ -1,31 +1,45 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { HiMenu, HiX } from 'react-icons/hi';
+import { FaWhatsapp } from 'react-icons/fa';
 import { resumeData } from '../data/resumeData';
+import { navSections } from '../data/marketingContent';
 import { useSectionScrollNav } from '../hooks/useSectionScrollNav';
 
 const MotionButton = motion.button;
 
-const navLinks = [
-  { label: 'Home', sectionId: 'hero' },
-  { label: 'About', sectionId: 'about' },
-  { label: 'Services', sectionId: 'services' },
-  { label: 'Skills', sectionId: 'skills' },
-  { label: 'Experience', sectionId: 'experience' },
-  { label: 'Projects', sectionId: 'projects' },
-  { label: 'Contact', sectionId: 'contact' },
-];
+const navLinks = navSections;
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navRef = useRef(null);
   const goToSection = useSectionScrollNav();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  /* Publish the live navbar height as a CSS variable so sections like the
+     hero can size themselves to (viewport - navbar) without hard-coding. */
+  useEffect(() => {
+    const el = navRef.current;
+    if (!el) return undefined;
+    const root = document.documentElement;
+    const write = () => {
+      root.style.setProperty('--navbar-height', `${el.offsetHeight}px`);
+    };
+    write();
+    const ro = new ResizeObserver(write);
+    ro.observe(el);
+    window.addEventListener('resize', write);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', write);
+    };
   }, []);
 
   useEffect(() => {
@@ -44,7 +58,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`nav-shell${scrolled ? ' nav-shell--scrolled' : ''}`}>
+      <nav ref={navRef} className={`nav-shell${scrolled ? ' nav-shell--scrolled' : ''}`}>
         <div className="nav-inner">
           <Link to="/" className="nav-brand">
             {resumeData.name}
@@ -63,12 +77,13 @@ export default function Navbar() {
               </MotionButton>
             ))}
             <a
-              href={resumeData.resumePdf}
+              href={resumeData.whatsapp}
               target="_blank"
               rel="noopener noreferrer"
-              className="nav-resume"
+              className="nav-resume nav-resume--whatsapp"
             >
-              Resume
+              <FaWhatsapp aria-hidden style={{ marginRight: '0.4rem', verticalAlign: '-2px' }} />
+              WhatsApp
             </a>
           </div>
 
@@ -111,13 +126,14 @@ export default function Navbar() {
           </button>
         ))}
         <a
-          href={resumeData.resumePdf}
+          href={resumeData.whatsapp}
           target="_blank"
           rel="noopener noreferrer"
-          className="nav-resume nav-mobile-overlay__resume"
+          className="nav-resume nav-resume--whatsapp nav-mobile-overlay__resume"
           onClick={() => setMobileOpen(false)}
         >
-          Download Resume
+          <FaWhatsapp aria-hidden style={{ marginRight: '0.5rem', verticalAlign: '-2px' }} />
+          Message on WhatsApp
         </a>
       </motion.div>
 

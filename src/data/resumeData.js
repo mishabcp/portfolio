@@ -60,7 +60,7 @@ export const resumeData = {
   name: 'Mishab CP',
   title: 'Full Stack Developer',
   tagline:
-    'Production-grade fintech and enterprise web apps — full stack from APIs and data layers to responsive frontends.',
+    'Production-grade websites and web apps — full stack from APIs and data layers to responsive frontends.',
   /** Hero-only lines (below main tagline) */
   heroSubline: '2+ years at Netplex IT Solutions, Dubai, UAE · Based in Kerala, India',
   heroTechLine: 'PHP · Laravel · CodeIgniter · React · MySQL · REST API integrations',
@@ -80,7 +80,7 @@ export const resumeData = {
   portfolio: 'https://mishabcp.github.io/portfolio',
   resumePdf: '/resume.pdf',
   summary:
-    'Full Stack Web Developer with 2+ years at Netplex IT Solutions, building production-grade fintech and enterprise web apps. Specialist in PHP (Laravel, CodeIgniter), React, MySQL, and REST API integrations — delivering scalable platforms from backend architecture to responsive frontends, with up to 80% performance gains through database optimization.',
+    'Full Stack Web Developer with 2+ years at Netplex IT Solutions, building production-grade websites and web apps including fintech and enterprise platforms. Specialist in PHP (Laravel, CodeIgniter), React, MySQL, and REST API integrations — delivering scalable products from backend architecture to responsive frontends, with up to 80% performance gains through database optimization.',
   /** Second paragraph in About (personal projects & stack) */
   aboutContinuation:
     'Alongside client work, I build full-stack products with Next.js, NestJS, TypeScript, PostgreSQL, Prisma, and Supabase — including a diagnostic-lab LIMS (LabCore), construction operations tooling (BuildOps), and ClariSpec, an AI-assisted requirements platform using Google Generative AI and Groq for LLM-driven spec generation, diff editing, and exports.',
@@ -121,17 +121,17 @@ export const resumeData = {
   skills: skillCategories.flatMap((c) => c.skills),
   skillsSectionHeadline: 'What I do',
   skillsSectionIntro:
-    'Full stack delivery from Laravel and Node APIs to React and Next.js frontends — databases, integrations, and production performance.',
+    'Websites and web apps, end to end — from the database and server logic on the inside, to the screens people actually use on the outside.',
   experience: {
-    role: 'PHP Full Stack Developer',
+    role: 'Full Stack Web Developer',
     company: 'Netplex IT Solutions',
     location: 'Dubai, UAE',
     period: 'May 2024 — Present',
     points: [
-      'Developed PlexPay fintech platform (CodeIgniter, MySQL) supporting mobile recharges, bill payments, and voucher services.',
-      'Built ISL Laboratory Management ERP (Laravel) with role-based access across departments.',
-      'Integrated third-party APIs and improved system performance by 80% via query optimization, indexing, and caching.',
-      'Managed full deployment lifecycle: server configuration, database setup, and post-launch support.',
+      'Built PlexPay — a payments app that handles mobile top-ups, bill payments, and gift vouchers.',
+      'Built a complete operations system for ISL Laboratory, with separate access levels for each department.',
+      'Connected the apps to outside services and made them up to 80% faster by fixing slow database lookups and adding caching.',
+      'Handled launches end to end: server setup, database setup, and ongoing support after going live.',
     ],
   },
   projects: portfolioProjects,

@@ -2,12 +2,14 @@ import React, { Suspense, lazy } from 'react';
 import { motion, useInView } from 'framer-motion';
 import HeroSection from './components/HeroSection';
 
-const AboutSection = lazy(() => import('./components/AboutSection'));
-const ServicesSection = lazy(() => import('./components/ServicesSection'));
+const ProblemsSection = lazy(() => import('./components/ProblemsSection'));
+const ProcessSection = lazy(() => import('./components/ProcessSection'));
+const PackagesSection = lazy(() => import('./components/PackagesSection'));
+const CaseStudiesSection = lazy(() => import('./components/CaseStudiesSection'));
 const SkillsSection = lazy(() => import('./components/SkillsSection'));
-const ExperienceSection = lazy(() => import('./components/ExperienceSection'));
-const ProjectsSection = lazy(() => import('./components/ProjectsSection'));
-const ContactSection = lazy(() => import('./components/ContactSection'));
+const AboutSection = lazy(() => import('./components/AboutSection'));
+const FAQSection = lazy(() => import('./components/FAQSection'));
+const FinalCTASection = lazy(() => import('./components/FinalCTASection'));
 
 function Divider() {
   const ref = React.useRef(null);
@@ -20,9 +22,7 @@ function Divider() {
       animate={inView ? { scaleX: 1, opacity: 1 } : {}}
       transition={{ duration: 0.8, ease: 'easeOut' }}
       className="editorial-rule"
-      style={{
-        transformOrigin: 'center',
-      }}
+      style={{ transformOrigin: 'center' }}
     />
   );
 }
@@ -30,11 +30,16 @@ function Divider() {
 function SectionFallback() {
   return (
     <div style={{ minHeight: '20vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <div style={{
-        width: 24, height: 24, border: '2px solid rgba(0,0,0,0.12)',
-        borderTopColor: '#000000', borderRadius: '50%',
-        animation: 'spin 0.8s linear infinite',
-      }} />
+      <div
+        style={{
+          width: 24,
+          height: 24,
+          border: '2px solid rgba(0,0,0,0.12)',
+          borderTopColor: '#000000',
+          borderRadius: '50%',
+          animation: 'spin 0.8s linear infinite',
+        }}
+      />
     </div>
   );
 }
@@ -50,19 +55,21 @@ export default function Home() {
     >
       <main className="content-container content-container--full">
         <HeroSection />
-        <Divider />
         <Suspense fallback={<SectionFallback />}>
-          <AboutSection />
+          <ProblemsSection />
           <Divider />
-          <ServicesSection />
+          <ProcessSection />
+          <Divider />
+          <PackagesSection />
+          <Divider />
+          <CaseStudiesSection />
           <Divider />
           <SkillsSection />
           <Divider />
-          <ExperienceSection />
+          <AboutSection />
           <Divider />
-          <ProjectsSection />
-          <Divider />
-          <ContactSection />
+          <FAQSection />
+          <FinalCTASection />
         </Suspense>
       </main>
     </motion.div>

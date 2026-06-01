@@ -15,6 +15,30 @@ export const portfolioProjects = [
     tech: 'Next.js · TypeScript · Tailwind · Supabase · Google AI · Groq',
     detailTech:
       'Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS · Supabase (auth + data) · Groq + Google Gemini · Recharts / Framer Motion',
+    atAGlance: {
+      problem: 'Product requirements often start as scattered notes, so scope and acceptance criteria stay fuzzy until late.',
+      solution: 'AI-guided discovery turns rough ideas into versioned Markdown specs with editing, export, and admin workflows.',
+      role: 'Solo full-stack product build',
+      status: 'Live demo',
+    },
+    highlights: [
+      {
+        title: 'Guided discovery chat',
+        body: 'Question flow tracks requirement coverage and completion.',
+      },
+      {
+        title: 'Versioned spec documents',
+        body: 'Generates BRD, SRS, user stories, architecture notes, and more.',
+      },
+      {
+        title: 'AI edits with diff',
+        body: 'Users review accept/reject changes before committing edits.',
+      },
+      {
+        title: 'Provider fallback',
+        body: 'Groq-first generation with Gemini fallback for shared paths.',
+      },
+    ],
     heroImage: {
       src: '/clarispec_img/Screenshot 2026-03-30 001828.png',
       alt: 'ClariSpec gather chat — questions, suggestions, and requirement coverage',
@@ -113,6 +137,30 @@ export const portfolioProjects = [
     tech: 'React · Vite · Node.js · Express · Prisma · PostgreSQL',
     detailTech:
       'React 18 · Vite · Express · Prisma · PostgreSQL · JWT · Zustand · Tailwind · Recharts · Framer Motion · pdfkit · exceljs',
+    atAGlance: {
+      problem: 'Construction SMBs lose visibility when projects, collections, materials, and payables live across spreadsheets.',
+      solution: 'BuildOps centralizes branch-scoped projects, costs, payments, dashboards, and exportable reports.',
+      role: 'Solo full-stack MVP build',
+      status: 'Live app',
+    },
+    highlights: [
+      {
+        title: 'Project finance hub',
+        body: 'Tracks stages, receipts, labour, materials, associates, bills, and expenses.',
+      },
+      {
+        title: 'Branch-aware access',
+        body: 'Role and branch scoping keep teams focused on their own work.',
+      },
+      {
+        title: 'Stakeholder reports',
+        body: 'Server-generated PDF and Excel exports for project review.',
+      },
+      {
+        title: 'Ops dashboard',
+        body: 'Aggregates branch-level revenue, expenses, and project status.',
+      },
+    ],
     heroImage: {
       src: '/Buildops_img/Screenshot 2026-03-30 002458.png',
       alt: 'BuildOps dashboard — aggregates and project visibility',
@@ -210,6 +258,30 @@ export const portfolioProjects = [
     tech: 'Next.js · NestJS · Prisma · PostgreSQL · Supabase · Vercel',
     detailTech:
       'pnpm monorepo · Next.js 14 (App Router) · NestJS · Prisma · PostgreSQL · Tailwind · Recharts · Puppeteer PDF service · JWT · bcrypt',
+    atAGlance: {
+      problem: 'Small labs need reliable sample, result, and report workflows without expensive enterprise LIMS software.',
+      solution: 'LabCore covers patient intake through authorised reporting with RBAC, PDFs, and operational visibility.',
+      role: 'Solo full-stack LIMS MVP',
+      status: 'Live demo',
+    },
+    highlights: [
+      {
+        title: 'End-to-end lab workflow',
+        body: 'Patients, orders, samples, results, reports, and delivery metrics.',
+      },
+      {
+        title: 'Role-aware operations',
+        body: 'Server-side guards and permission matrices protect sensitive flows.',
+      },
+      {
+        title: 'Dedicated PDF service',
+        body: 'Puppeteer worker isolates report generation from the core API.',
+      },
+      {
+        title: 'Shared contracts',
+        body: 'Monorepo packages reduce drift between the web app and API.',
+      },
+    ],
     heroImage: {
       src: '/labcore_img/Screenshot 2026-03-30 041803.png',
       alt: 'LabCore operational dashboard — KPIs and lab workflow entry points',
