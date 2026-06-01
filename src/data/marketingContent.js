@@ -26,7 +26,6 @@ export const marketingContent = {
     },
     statsStrip: [
       { value: '2+ yrs', label: 'At a Dubai-based company' },
-      { value: '80%', label: 'Avg perf gain on rescued queries' },
     ],
   },
 
